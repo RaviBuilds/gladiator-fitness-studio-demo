@@ -1,0 +1,243 @@
+{
+  "pbtResults": {
+    "1. Exploratory baseline on UNFIXED code (brief, manual/DevTools)": {
+      "status": "passed",
+      "failingExample": "Analytic (no browser available): 390x844 secH 776.5, copyH ~277 -> --hero-copy-h 35.7% vs true (776.5-327.5)/776.5 = 57.8% (~171px overlap). 768x1024 secH 942, copyH ~179 (19%) -> clamped 30% vs true 383/942 = 40.7% (~100px overlap). 375x667 secH 613.6 -> current ~45.6% (copy-height only; 58% ceiling not engaged but would cap a correct value) vs true ~73.7%. Autoplay interval deps [total,index] with no hover/focus/visibility/reducedMotion guard -> advances in all 4 pause conditions. Back filter drop-shadow(0 16px 32px /.45); front drop-shadow(0 8px 24px /.65) = ~0.16em blur at 1366. Motif chip `sm:block` visible at 768.",
+      "lastRunTimestamp": 1790496500183
+    },
+    "3.9 Preservation checks (compare to task 2 baseline)": {
+      "status": "passed",
+      "lastRunTimestamp": 1790502579422
+    }
+  },
+  "executionHistory": {
+    "1. Exploratory baseline on UNFIXED code (brief, manual/DevTools)": [
+      {
+        "executionId": "e09a6543-7c3c-48d0-9593-d9f222b26d43",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790496293489
+      },
+      {
+        "executionId": "e09a6543-7c3c-48d0-9593-d9f222b26d43",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790496381681
+      },
+      {
+        "executionId": "e09a6543-7c3c-48d0-9593-d9f222b26d43",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790496542741
+      }
+    ],
+    "2. Preservation baseline on UNFIXED code (observe before fixing)": [
+      {
+        "executionId": "e09a6543-7c3c-48d0-9593-d9f222b26d43",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790496293564
+      },
+      {
+        "executionId": "e09a6543-7c3c-48d0-9593-d9f222b26d43",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790496552925
+      },
+      {
+        "executionId": "e09a6543-7c3c-48d0-9593-d9f222b26d43",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790497229449
+      }
+    ],
+    "3.1 Zone measurement fix": [
+      {
+        "executionId": "e09a6543-7c3c-48d0-9593-d9f222b26d43",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790496293624
+      },
+      {
+        "executionId": "e09a6543-7c3c-48d0-9593-d9f222b26d43",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790497251162
+      },
+      {
+        "executionId": "d1b64d41-cf19-4e5f-b95b-d66594963a9f",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790500688622
+      }
+    ],
+    "3.2 Subject crop fade mask, static grade, optional drop-shadow": [
+      {
+        "executionId": "e09a6543-7c3c-48d0-9593-d9f222b26d43",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790496293704
+      },
+      {
+        "executionId": "d1b64d41-cf19-4e5f-b95b-d66594963a9f",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790500705721
+      },
+      {
+        "executionId": "d1b64d41-cf19-4e5f-b95b-d66594963a9f",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790501598376
+      }
+    ],
+    "3.3 Back/front type filter changes": [
+      {
+        "executionId": "e09a6543-7c3c-48d0-9593-d9f222b26d43",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790496293782
+      },
+      {
+        "executionId": "d1b64d41-cf19-4e5f-b95b-d66594963a9f",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790501615996
+      },
+      {
+        "executionId": "d1b64d41-cf19-4e5f-b95b-d66594963a9f",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790501682870
+      }
+    ],
+    "3.4 Key light + contact shadow moved into `zone--behind`": [
+      {
+        "executionId": "e09a6543-7c3c-48d0-9593-d9f222b26d43",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790496293831
+      },
+      {
+        "executionId": "d1b64d41-cf19-4e5f-b95b-d66594963a9f",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790501684272
+      },
+      {
+        "executionId": "d1b64d41-cf19-4e5f-b95b-d66594963a9f",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790501790047
+      }
+    ],
+    "3.5 Re-author `lib/hero.ts` slide 0 composition": [
+      {
+        "executionId": "e09a6543-7c3c-48d0-9593-d9f222b26d43",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790496293880
+      },
+      {
+        "executionId": "d1b64d41-cf19-4e5f-b95b-d66594963a9f",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790501791174
+      },
+      {
+        "executionId": "d1b64d41-cf19-4e5f-b95b-d66594963a9f",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790501971028
+      }
+    ],
+    "3.6 Motif chip + optional arc stroke": [
+      {
+        "executionId": "e09a6543-7c3c-48d0-9593-d9f222b26d43",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790496293961
+      },
+      {
+        "executionId": "d1b64d41-cf19-4e5f-b95b-d66594963a9f",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790501985213
+      },
+      {
+        "executionId": "d1b64d41-cf19-4e5f-b95b-d66594963a9f",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790502091260
+      }
+    ],
+    "3.7 Autoplay gating + progress fill sync": [
+      {
+        "executionId": "e09a6543-7c3c-48d0-9593-d9f222b26d43",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790496294035
+      },
+      {
+        "executionId": "d1b64d41-cf19-4e5f-b95b-d66594963a9f",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790502098998
+      },
+      {
+        "executionId": "d1b64d41-cf19-4e5f-b95b-d66594963a9f",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790502221932
+      }
+    ],
+    "3.8 Verify bug condition exploration now passes": [
+      {
+        "executionId": "e09a6543-7c3c-48d0-9593-d9f222b26d43",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790496294085
+      },
+      {
+        "executionId": "d1b64d41-cf19-4e5f-b95b-d66594963a9f",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790502230036
+      },
+      {
+        "executionId": "d1b64d41-cf19-4e5f-b95b-d66594963a9f",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790502390373
+      }
+    ],
+    "3.9 Preservation checks (compare to task 2 baseline)": [
+      {
+        "executionId": "e09a6543-7c3c-48d0-9593-d9f222b26d43",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790496294135
+      },
+      {
+        "executionId": "d1b64d41-cf19-4e5f-b95b-d66594963a9f",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790502391752
+      },
+      {
+        "executionId": "d1b64d41-cf19-4e5f-b95b-d66594963a9f",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790502604512
+      }
+    ],
+    "4. Validation": [
+      {
+        "executionId": "e09a6543-7c3c-48d0-9593-d9f222b26d43",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790496294185
+      },
+      {
+        "executionId": "d1b64d41-cf19-4e5f-b95b-d66594963a9f",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790502605800
+      },
+      {
+        "executionId": "d1b64d41-cf19-4e5f-b95b-d66594963a9f",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790502615733
+      }
+    ],
+    "5. Checkpoint - Ensure all checks pass": [
+      {
+        "executionId": "e09a6543-7c3c-48d0-9593-d9f222b26d43",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790496294232
+      },
+      {
+        "executionId": "d1b64d41-cf19-4e5f-b95b-d66594963a9f",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790503520887
+      },
+      {
+        "executionId": "d1b64d41-cf19-4e5f-b95b-d66594963a9f",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790503639785
+      }
+    ],
+    "3. Fix Slide 01 stage composition and autoplay gating": [
+      {
+        "executionId": "d1b64d41-cf19-4e5f-b95b-d66594963a9f",
+        "chatSessionId": "sess_c9c68bb1-2de6-429d-9afd-9747f731af22",
+        "timestamp": 1790502604568
+      }
+    ]
+  }
+}
