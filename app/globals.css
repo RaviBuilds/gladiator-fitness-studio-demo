@@ -915,6 +915,53 @@ html {
   }
 }
 
+/* MOBILE COMPOSITION — below md (the same boundary OfferSignal.tsx already
+   uses to centre the docked card). The card's content is centred on its own
+   axis so it reads as a deliberate mobile module rather than a stacked desktop
+   panel. Only ALIGNMENT changes here: no type size, colour, copy, padding or
+   card dimension is touched, and md and up are unaffected.
+   The head becomes a 1fr / auto / 1fr grid: the eyebrow sits in the true
+   centre column while the state chip keeps its upper-right position in the
+   third column — the grid guarantees the two can never overlap. */
+@media (max-width: 767.98px) {
+  .factory-offer-signal {
+    text-align: center;
+  }
+
+  .factory-offer-signal__head {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+  }
+
+  .factory-offer-signal__eyebrow {
+    grid-column: 2;
+    justify-self: center;
+  }
+
+  .factory-offer-signal__state {
+    grid-column: 3;
+    justify-self: end;
+  }
+
+  .factory-offer-signal__terms {
+    align-items: center;
+  }
+
+  .factory-offer-signal__term {
+    justify-content: center;
+  }
+
+  .factory-offer-signal__foot {
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.375rem;
+  }
+
+  .factory-offer-signal__cta {
+    margin-left: 0;
+  }
+}
+
 @media (min-width: 1024px) {
   .factory-offer-signal__title {
     font-size: 1.125rem;

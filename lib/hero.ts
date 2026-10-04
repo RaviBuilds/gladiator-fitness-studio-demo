@@ -47,20 +47,30 @@ export const heroConfiguration: HeroConfiguration = {
       // head/shoulders cut through BUILD YOUR, and `frontLeft` so POWER.
       // starts inside the wide torso band.
       composition: {
+        // Phones (<768px, also used for short phones — no `mobileShort`).
+        // Mirrors the desktop two-line reading: BUILD YOUR on one line,
+        // POWER. alone on the second, staggered right over the torso.
         mobile: {
-          subjectHeight: "92%",
+          // ~12% larger athlete than the previous 92% frame. The extra height
+          // is taken mostly below the zone floor (inside the cutout's bottom
+          // fade) so the head stays clear of the header.
+          subjectHeight: "103%",
           subjectWidth: "106%",
           subjectCenterX: "54%",
-          // The athlete stands on the bottom of the composition zone. Below
-          // 1024px that zone already sits above the copy block, so no extra
-          // lift is needed here.
-          subjectBottom: "0%",
-          typeSize: "18vw",
-          backTop: "24%",
-          backLeft: "5%",
-          backWordLayout: "stack",
-          frontTop: "52%",
-          frontLeft: "10%",
+          subjectBottom: "-5%",
+          // Largest size at which "BUILD YOUR" (~5.73em incl. word gap) fits
+          // on one line inside the frame at every phone width (320-767px).
+          typeSize: "15.6vw",
+          // Raised from 22% so more of "YOUR" clears the athlete's head.
+          backTop: "14%",
+          backLeft: "4%",
+          backWordLayout: "inline",
+          // Anchored to the BUILD YOUR line in em (0.82em line box + 0.4em
+          // gap, matching desktop's ~0.43em) instead of a zone %: the zone's
+          // height/width ratio varies ~2x across phones, so a % offset either
+          // collides with YOUR on short phones or drifts away on tall ones.
+          frontTop: "calc(14% + 1.22em)",
+          frontLeft: "30%",
         },
         tablet: {
           subjectHeight: "90%",
@@ -160,36 +170,45 @@ export const heroConfiguration: HeroConfiguration = {
           // upper-left with its tail meeting the head; WITH is pulled right
           // and down onto the shoulder/back so the figure genuinely
           // interrupts it; INTENT. crosses the torso.
-          typeSize: "12vw",
-          backTop: "3%",
-          backLeft: "2%",
+          typeSize: "16.63vw",
+          // The whole MOVE / WITH / INTENT. block (43.06vw tall) is centred in
+          // the zone: its top sits at 50% minus half that height, and the
+          // other two words keep their tight vw steps below it. The
+          // horizontal stagger between the words is unchanged.
+          backTop: "calc(50% - 21.53vw)",
+          backLeft: "10%",
           backWordLayout: "inline",
           // Bridge at z15, behind the athlete, so its tail is genuinely cut
           // by the back contour instead of floating beside the figure.
-          middleTop: "27%",
-          middleLeft: "34%",
-          middleSize: "7.6vw",
-          // INTENT. lands over the torso, offset left so it reads clearly
-          // against the athlete rather than running off toward the edge.
-          frontTop: "50%",
-          frontLeft: "3%",
-          frontSize: "13vw",
+          // Vertical rhythm: WITH and INTENT. are anchored to MOVE in vw (the
+          // unit their sizes use) rather than as independent zone %, so the
+          // three words keep one tight ~3vw gap at every phone width/height
+          // instead of drifting apart on tall frames. Each step = previous
+          // word's line box (0.82 x its size) + 3vw.
+          middleTop: "calc(50% - 4.89vw)",
+          middleLeft: "42%",
+          middleSize: "10.54vw",
+          // INTENT. lands over the torso.
+          frontTop: "calc(50% + 6.75vw)",
+          frontLeft: "11%",
+          frontSize: "18.02vw",
         },
         mobileShort: {
           subjectHeight: "88%",
           subjectWidth: "112%",
           subjectCenterX: "50%",
           subjectBottom: "-2%",
-          typeSize: "11vw",
-          backTop: "1%",
-          backLeft: "2%",
+          typeSize: "15.25vw",
+          // Same centred block as `mobile` (40.11vw tall), from this frame's sizes.
+          backTop: "calc(50% - 20.06vw)",
+          backLeft: "13%",
           backWordLayout: "inline",
-          middleTop: "24%",
-          middleLeft: "38%",
-          middleSize: "7vw",
-          frontTop: "46%",
-          frontLeft: "3%",
-          frontSize: "12vw",
+          middleTop: "calc(50% - 4.55vw)",
+          middleLeft: "49%",
+          middleSize: "9.71vw",
+          frontTop: "calc(50% + 6.41vw)",
+          frontLeft: "14%",
+          frontSize: "16.63vw",
         },
         tablet: {
           subjectHeight: "98%",

@@ -110,8 +110,12 @@ export function Hero({
         // The utility row. Absolute (and pointer-transparent) over the hero
         // from 1024px up; a docked strip below the hero under that. Only the
         // card itself takes pointer events, so the row can never swallow a
-        // click on the header, the hero CTAs or the slide controls.
-        <div className="factory-container pb-6 pt-5 sm:pb-7 sm:pt-6 lg:pointer-events-none lg:absolute lg:inset-x-0 lg:top-[calc(var(--header-h)+1.375rem)] lg:z-40 lg:py-0">
+        // click on the header, the hero CTAs or the slide controls. Phones
+        // (<640px): no top padding, because the hero already ends in 40px of
+        // bottom padding (pb-10), and a matching pb-10 below, so the docked
+        // card sits evenly between the slide controls and the marquee
+        // (40/40 instead of 60/24). sm and up are unchanged.
+        <div className="factory-container pb-10 pt-0 sm:pb-7 sm:pt-6 lg:pointer-events-none lg:absolute lg:inset-x-0 lg:top-[calc(var(--header-h)+1.375rem)] lg:z-40 lg:py-0">
           <OfferSignal
             offer={activeOffer}
             config={offerEngine}

@@ -112,7 +112,10 @@ export function OfferSignal({
       // without needing a second render path.
       data-offer-state={offer.stateKey}
       data-offer-phase={offer.phase}
-      className={`factory-offer-signal factory-focus pointer-events-auto w-full max-w-[26rem] lg:ml-auto lg:w-[17.25rem] lg:max-w-none ${className}`}
+      // Below md the docked card (capped at 26rem) is centred in the strip
+      // rather than hugging the left edge on wider phones. md and up keep the
+      // original placement: left at tablet, right-aligned from lg.
+      className={`factory-offer-signal factory-focus pointer-events-auto mx-auto w-full max-w-[26rem] md:mx-0 lg:ml-auto lg:w-[17.25rem] lg:max-w-none ${className}`}
     >
       <span className="factory-offer-signal__head">
         <span className="factory-offer-signal__eyebrow">
