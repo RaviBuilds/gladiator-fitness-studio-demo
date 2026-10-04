@@ -72,7 +72,7 @@ export function About() {
             <span className="factory-index" aria-hidden="true">
               {index}
             </span>
-            <span className="h-px w-8 bg-(--accent) sm:w-12" aria-hidden="true" />
+            <span className="h-px w-8 bg-(--brand-secondary) sm:w-12" aria-hidden="true" />
             <span className="factory-eyebrow">{eyebrow}</span>
           </div>
         </Reveal>
@@ -180,7 +180,7 @@ export function About() {
               {/* Accent rule entering the frame from outside its top-left. */}
               <span
                 aria-hidden="true"
-                className="absolute -left-6 top-10 hidden h-px w-14 bg-(--accent) lg:block"
+                className="absolute -left-6 top-10 hidden h-px w-14 bg-(--brand-secondary) lg:block"
               />
 
               {frameLabel && (

@@ -350,6 +350,14 @@ export const trainingIntelligenceConfiguration: TrainingIntelligenceConfiguratio
   primaryCtaLabel: "Talk to a coach about this goal",
   secondaryCtaLabel: "See the related program",
   ctaMessageTemplate: "Hi, I'd like to discuss my {goal} training goal.",
+  // Tools strip (components/sections/TrainingTools.tsx, between Section 01 and
+  // 02) — the hand-off to the site's guided, personalised tools. Tool names,
+  // copy and routes live in lib/fitness-tools.ts; only the strip's own
+  // framing lives here.
+  toolsEyebrow: "Training tools",
+  toolsHeading: "Not sure where to start?",
+  toolsDeck:
+    "Three short guided tools. Answer a few questions and get a starting point, a roadmap or a first-month plan shaped around your goal and your week.",
   disclaimer:
     "General training principles for education, not medical, physiotherapy or nutrition advice. Tell a coach about any injury or medical condition before you start.",
   // Optional attribution. Leave undefined unless the gym can genuinely stand

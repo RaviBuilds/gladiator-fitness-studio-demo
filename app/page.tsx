@@ -2,11 +2,13 @@ import { business } from "@/lib/business";
 import { offerEngine } from "@/lib/festival-offers";
 import { getActiveOffer } from "@/lib/offer-engine";
 import { sections } from "@/lib/sections";
+import { buildWhatsAppHref } from "@/lib/whatsapp";
 import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/Hero";
 import { KineticStrip } from "@/components/sections/KineticStrip";
 import { Trust } from "@/components/sections/Trust";
 import { About } from "@/components/sections/About";
+import { TrainingTools } from "@/components/sections/TrainingTools";
 import { Programs } from "@/components/sections/Programs";
 import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
 import { Transformations } from "@/components/sections/Transformations";
@@ -21,7 +23,7 @@ import { Contact } from "@/components/sections/Contact";
 import { Location } from "@/components/sections/Location";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { Footer } from "@/components/sections/Footer";
-import { WhatsAppButton } from "@/components/sections/WhatsAppButton";
+import { FloatingContact } from "@/components/sections/FloatingContact";
 import { ContactDialog } from "@/components/motion/ContactDialog";
 import { transformations } from "@/lib/transformations";
 
@@ -47,14 +49,8 @@ import { transformations } from "@/lib/transformations";
  */
 export const revalidate = 3600;
 
-function buildWhatsAppHref(): string {
-  const digits = business.whatsapp.number.replace(/[^\d]/g, "");
-  const text = encodeURIComponent(business.whatsapp.message);
-  return `https://wa.me/${digits}?text=${text}`;
-}
-
 export default function Home() {
-  const whatsappHref = buildWhatsAppHref();
+  const whatsappHref = buildWhatsAppHref(business.whatsapp);
   const consentVerifiedTransformation = transformations.find((t) => t.consentVerified);
 
   /*
@@ -81,6 +77,7 @@ export default function Home() {
         <KineticStrip />
         {sections.trust && <Trust />}
         {sections.about && <About />}
+        <TrainingTools />
         {sections.programs && <Programs whatsappHref={whatsappHref} />}
         {sections.whyChooseUs && <WhyChooseUs />}
         {sections.transformations && <Transformations />}
@@ -104,7 +101,10 @@ export default function Home() {
 
       <Footer />
 
-      <WhatsAppButton href={whatsappHref} />
+      <FloatingContact
+        whatsappHref={whatsappHref}
+        phoneHref={business.phone ? `tel:${business.phone}` : undefined}
+      />
       <ContactDialog
         whatsappHref={whatsappHref}
         image={consentVerifiedTransformation?.image}

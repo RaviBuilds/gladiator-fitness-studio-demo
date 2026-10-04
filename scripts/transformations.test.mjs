@@ -173,14 +173,19 @@ test("demo figures are labelled synthetic and the sparse case proves degradation
   const DATA_SRC = readFileSync(new URL("../lib/transformations.ts", import.meta.url), "utf8");
   assert.match(DATA_SRC, /SYNTHETIC FIGURES/, "demo numbers are flagged, never presented as real");
 
-  const [complete, sparse] = transformations;
+  const [complete, second] = transformations;
   assert.equal(buildMetricCells(complete.metrics).length >= 4, true, "a full dossier shows 4+");
   assert.ok(complete.training?.length && complete.nutrition?.length && complete.coachNotes?.length);
+  // Both demo cases are now data-complete.
+  assert.equal(buildMetricCells(second.metrics).length >= 4, true);
+  assert.ok(second.training?.length && second.nutrition?.length && second.coachNotes?.length);
 
-  // The sparse case must carry only what was recorded.
-  assert.deepEqual(buildMetricCells(sparse.metrics).map((c) => c.key), ["duration", "load"]);
-  assert.equal(sparse.nutrition, undefined);
-  assert.equal(sparse.coachNotes, undefined);
+  // Degradation is proven on a synthetic sparse input, not on the demo data:
+  // only what was recorded is shown.
+  assert.deepEqual(
+    buildMetricCells({ durationMonths: 4, sessionsPerWeek: 5 }).map((c) => c.key),
+    ["duration", "load"]
+  );
 });
 
 test("optional dossier blocks are conditionally rendered, never emptied", () => {

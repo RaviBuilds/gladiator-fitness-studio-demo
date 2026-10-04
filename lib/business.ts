@@ -67,4 +67,10 @@ export const business: Business = {
   // accent verified at ~4.59:1 contrast; see app/globals.css for the
   // matching --accent-hover / --accent-foreground tokens.
   accentColor: "#E6001F",
+  // Gladiator Gold — authentic secondary brand colour from the gym's brand
+  // references. Supporting / information signal (eyebrows, metadata,
+  // technical marks, focus). ~12:1 on the near-black base, so it is safe as
+  // small text there; fills carry dark text (--brand-secondary-foreground),
+  // and light surfaces use a derived ink variant — never this value raw.
+  secondaryColor: "#F4C400",
 };

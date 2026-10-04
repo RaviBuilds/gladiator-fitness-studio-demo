@@ -62,14 +62,14 @@ export function Contact({ whatsappHref }: { whatsappHref: string }) {
           <path d="M12,0 L12,12 L0,12" />
         </svg>
         <svg
-          className="absolute top-1/4 right-[8%] h-4 w-4 stroke-current text-(--accent) opacity-30"
+          className="absolute top-1/4 right-[8%] h-4 w-4 stroke-current text-(--brand-secondary) opacity-30"
           fill="none"
           strokeWidth="1"
         >
           <path d="M2,0 L2,4 M0,2 L4,2" />
         </svg>
         <svg
-          className="absolute bottom-1/3 left-[6%] h-4 w-4 stroke-current text-(--accent) opacity-25"
+          className="absolute bottom-1/3 left-[6%] h-4 w-4 stroke-current text-(--brand-secondary) opacity-25"
           fill="none"
           strokeWidth="1"
         >

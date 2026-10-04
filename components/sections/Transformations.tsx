@@ -125,7 +125,7 @@ export function Transformations() {
                 <span className="factory-index" aria-hidden="true">
                   04
                 </span>
-                <span className="h-px w-8 bg-(--accent) sm:w-12" aria-hidden="true" />
+                <span className="h-px w-8 bg-(--brand-secondary) sm:w-12" aria-hidden="true" />
                 <span className="factory-eyebrow">Results</span>
               </div>
               <h2

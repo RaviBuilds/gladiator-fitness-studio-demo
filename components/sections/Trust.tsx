@@ -1,6 +1,7 @@
 import { business } from "@/lib/business";
 import { googleReviews } from "@/lib/reviews";
 import { RatingStars } from "@/components/ui/RatingStars";
+import { GoogleLogo } from "@/components/ui/GoogleLogo";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/motion/Reveal";
 
@@ -24,9 +25,7 @@ export function Trust() {
 
   const googleSignal = hasReviews && (
     <div className="flex items-center gap-3 sm:gap-4">
-      <span className="factory-trust-label" aria-hidden="true">
-        Google
-      </span>
+      <GoogleLogo className="h-5 w-auto sm:h-6" />
       <span className="hidden h-4 w-px bg-(--border) sm:inline-block" aria-hidden="true" />
       <RatingStars rating={googleReviews.rating} />
       <span className="factory-trust-rating" aria-hidden="true">

@@ -57,7 +57,7 @@ export function WhyChooseUs() {
             <span className="factory-index" aria-hidden="true">
               {index}
             </span>
-            <span className="h-px w-8 bg-(--accent) sm:w-12" aria-hidden="true" />
+            <span className="h-px w-8 bg-(--brand-secondary) sm:w-12" aria-hidden="true" />
             <span className="factory-eyebrow">{eyebrow}</span>
           </div>
 

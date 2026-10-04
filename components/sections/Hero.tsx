@@ -4,9 +4,12 @@ import { business } from "@/lib/business";
 import { offerEngine } from "@/lib/festival-offers";
 import { pricing } from "@/lib/pricing";
 import { sections } from "@/lib/sections";
+import { services } from "@/lib/services";
+import { fitnessTools } from "@/lib/fitness-tools";
 import type { ResolvedOffer } from "@/lib/types";
 import { HeroSlider } from "@/components/motion/HeroSlider";
 import { OfferSignal } from "@/components/ui/OfferSignal";
+import { resolveHeroSlides } from "@/components/sections/fitnessToolsLogic";
 
 /**
  * Server wrapper around the client HeroSlider. Keeps data access in a
@@ -78,10 +81,26 @@ export function Hero({
       : undefined;
   const locality = business.address.locality || business.address.city || undefined;
 
+  // Data-driven hero CTAs. Each slide's `cta` sources (lib/hero.ts) are
+  // resolved here, on the server, against the interactive-tool registry, so
+  // HeroSlider only ever receives concrete label/href pairs. Section anchors
+  // count as available only when that section actually renders, so a
+  // fallback can never target an anchor that is not on the page.
+  const availableAnchors = [
+    sections.programs && services.some((s) => s.verified) ? "programs" : null,
+    sections.membership && pricing.enabled ? "membership" : null,
+  ].filter((id): id is string => id !== null);
+  const slides = resolveHeroSlides(heroConfiguration.slides, fitnessTools, {
+    whatsappHref,
+    availableAnchors,
+  });
+
   return (
-    <div className="relative">
+    // data-floating-contact-hero: FloatingContact hides the WhatsApp/Call
+    // actions while this element is in the viewport.
+    <div className="relative" data-floating-contact-hero>
       <HeroSlider
-        slides={heroConfiguration.slides}
+        slides={slides}
         whatsappHref={whatsappHref}
         motif={motif}
         locality={locality}

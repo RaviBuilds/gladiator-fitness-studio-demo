@@ -3,16 +3,7 @@ import Image from "next/image";
 import { business } from "@/lib/business";
 import { Button } from "@/components/ui/Button";
 import { MobileNav } from "@/components/motion/MobileNav";
-
-const NAV_LINKS = [
-  { href: "#programs", label: "Programs" },
-  { href: "#why-choose-us", label: "Why Us" },
-  { href: "#reviews", label: "Reviews" },
-  { href: "#membership", label: "Membership" },
-  { href: "#gallery", label: "Gallery" },
-  { href: "#faq", label: "FAQ" },
-  { href: "#contact", label: "Contact" },
-];
+import { DesktopNav } from "@/components/sections/DesktopNav";
 
 /**
  * Floating inset header bar. No scroll-driven JS — the bar carries its own
@@ -70,18 +61,9 @@ export function Header({ whatsappHref }: { whatsappHref: string }) {
 
           {/* Desktop nav from 1024px: with the brand text gone the row has
               room for the full link set well before 1280px, so tablets in
-              landscape get real navigation instead of the drawer. */}
-          <nav aria-label="Primary" className="hidden items-center gap-6 lg:flex xl:gap-9">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="factory-nav-link factory-focus"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+              landscape get real navigation instead of the drawer. Route-aware
+              (resolves section anchors to homepage anchors on /start). */}
+          <DesktopNav />
 
           <div className="flex shrink-0 items-center gap-3 sm:gap-4">
             <Button href={whatsappHref} variant="primary">

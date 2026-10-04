@@ -2,23 +2,18 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-
-const NAV_LINKS = [
-  { href: "#programs", label: "Programs" },
-  { href: "#why-choose-us", label: "Why Us" },
-  { href: "#reviews", label: "Reviews" },
-  { href: "#membership", label: "Membership" },
-  { href: "#gallery", label: "Gallery" },
-  { href: "#faq", label: "FAQ" },
-  { href: "#contact", label: "Contact" },
-];
+import { usePathname } from "next/navigation";
+import { MOBILE_NAV_LINKS, resolveNavHref } from "@/lib/nav";
 
 /**
  * Mobile navigation drawer. Client component isolated to interaction only;
- * the header shell around it stays server-rendered.
+ * the header shell around it stays server-rendered. Route-aware: section
+ * anchors resolve to absolute homepage anchors on /start (see lib/nav.ts), so
+ * a drawer link always returns to the homepage section.
  */
 export function MobileNav() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -46,7 +41,7 @@ export function MobileNav() {
         aria-expanded={open}
         aria-label={open ? "Close menu" : "Open menu"}
         onClick={() => setOpen((v) => !v)}
-        className="factory-focus flex h-10 w-10 flex-col items-center justify-center gap-[5px] border border-(--border) text-(--text-primary) transition-colors hover:border-(--accent)"
+        className="factory-focus flex h-10 w-10 flex-col items-center justify-center gap-[5px] border border-(--border) text-(--text-primary) transition-colors hover:border-(--brand-secondary)"
       >
         <span
           aria-hidden="true"
@@ -75,10 +70,10 @@ export function MobileNav() {
              spine, so the links line up with the logo above them. */
           className="factory-container fixed inset-0 top-(--header-h) z-40 flex flex-col gap-2 bg-(--bg-primary) py-10"
         >
-          {NAV_LINKS.map((link) => (
+          {MOBILE_NAV_LINKS.map((link) => (
             <Link
               key={link.href}
-              href={link.href}
+              href={resolveNavHref(link.href, pathname)}
               onClick={() => setOpen(false)}
               className="factory-focus border-b border-(--border) py-4 text-2xl font-semibold text-(--text-primary)"
             >

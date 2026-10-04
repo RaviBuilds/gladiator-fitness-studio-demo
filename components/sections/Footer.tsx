@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { business } from "@/lib/business";
 import { instagramConfig } from "@/lib/instagram";
+import { socialLinks } from "@/lib/social";
+import { SocialIcon } from "@/components/ui/SocialIcons";
 import { sections } from "@/lib/sections";
 import { Container } from "@/components/ui/Container";
 
@@ -82,26 +84,70 @@ export function Footer() {
               href={instagramConfig.profileUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="factory-focus mt-3 inline-flex items-center gap-2 text-sm text-(--text-secondary) transition-colors hover:text-(--text-primary)"
+              className="factory-focus mt-3 inline-flex items-center gap-3 text-base text-(--text-secondary) transition-colors hover:text-(--text-primary)"
             >
+              {/* Instagram glyph in the brand's yellow -> red -> magenta gradient. */}
               <svg
-                width="18"
-                height="18"
+                width="32"
+                height="32"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
+                stroke="url(#footer-instagram-gradient)"
+                strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 aria-hidden="true"
                 focusable="false"
               >
-                <rect x="3" y="3" width="18" height="18" rx="5" />
-                <circle cx="12" cy="12" r="4" />
-                <circle cx="17" cy="7" r="1" fill="currentColor" stroke="none" />
+                <defs>
+                  <radialGradient
+                    id="footer-instagram-gradient"
+                    gradientUnits="userSpaceOnUse"
+                    cx="7"
+                    cy="24"
+                    r="26"
+                  >
+                    <stop offset="0" stopColor="#FFDD55" />
+                    <stop offset="0.1" stopColor="#FFDD55" />
+                    <stop offset="0.5" stopColor="#FF543E" />
+                    <stop offset="1" stopColor="#C837AB" />
+                  </radialGradient>
+                </defs>
+                <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" />
+                <circle cx="12" cy="12" r="4.4" />
+                <circle cx="17.6" cy="6.4" r="1.2" fill="url(#footer-instagram-gradient)" stroke="none" />
               </svg>
               {instagramConfig.handle}
             </a>
+
+            {/* Other networks: icon only, no handle. Each links to the network
+                (homepage by default) until a real profile URL is set in
+                lib/social.ts. An empty href still renders a plain icon. */}
+            <ul className="mt-5 flex items-center gap-5" role="list">
+              {socialLinks.map((social) => (
+                <li key={social.id} className="flex items-center">
+                  {social.href ? (
+                    <a
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.label}
+                      className="factory-focus inline-flex text-(--text-primary) transition-transform duration-200 hover:-translate-y-0.5"
+                    >
+                      <SocialIcon id={social.id} />
+                    </a>
+                  ) : (
+                    <span
+                      role="img"
+                      aria-label={social.label}
+                      className="inline-flex text-(--text-primary)"
+                    >
+                      <SocialIcon id={social.id} />
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 

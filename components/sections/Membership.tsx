@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { offerEngine } from "@/lib/festival-offers";
 import { formatWindowEnd, resolvePlanOffers } from "@/lib/offer-engine";
 import { pricing } from "@/lib/pricing";
@@ -53,9 +54,10 @@ import { Reveal } from "@/components/motion/Reveal";
  * Every other card renders exactly as it did before the campaign existed, and
  * a plan that is hidden, contact-only, unknown to pricing or referenced with a
  * malformed percentage is simply not promoted. There is no struck-through fake
- * MRP and no ecommerce treatment — a "Regular" label over the gym's own list
- * price, an "Offer" label over the accent price, and the percentage as quiet
- * mono metadata.
+ * MRP and no ecommerce treatment — a promoted card is its own vertical
+ * composition: discount badge, a large accent "Offer" amount beside a muted
+ * "Regular" amount (the gym's own list price, labelled, not struck through),
+ * and a quiet mono terms line.
  *
  * Server Component: the register is static and every CTA is a link, so no
  * client-side JavaScript is required. Motion is the existing Reveal primitive
@@ -112,6 +114,11 @@ function PriceLine({
  * The promotional price block, rendered instead of PriceLine for a plan the
  * active campaign references.
  *
+ * Two stacked, labelled amounts side by side: the OFFER amount leads (large,
+ * accent) and the REGULAR amount sits beside it (smaller, muted). Each amount
+ * carries its own mono label above it, so the pair reads as two clearly
+ * separate fields rather than one crowded line.
+ *
  * Both amounts are read from the already-calculated ResolvedPlanOffer — this
  * component performs no arithmetic and formats with the same INR formatter as
  * every other price in the register, so a promoted price and a normal price can
@@ -124,17 +131,32 @@ function PriceLine({
 function PromoPriceLines({ promo }: { promo: ResolvedPlanOffer }) {
   return (
     <>
-      <span className="s06-price-row">
-        <span className="s06-price-tag">{offerEngine.regularPriceLabel}</span>
-        <span className="s06-price-regular">{formatPrice(promo.basePrice)}</span>
-      </span>
-      <span className="s06-price-row">
+      <span className="s06-promo-amount">
         <span className="s06-price-tag s06-price-tag-offer">
           {offerEngine.offerPriceLabel}
         </span>
         <span className="s06-price s06-price-offer">{formatPrice(promo.offerPrice)}</span>
       </span>
+      <span className="s06-promo-amount">
+        <span className="s06-price-tag">{offerEngine.regularPriceLabel}</span>
+        <span className="s06-price-regular">{formatPrice(promo.basePrice)}</span>
+      </span>
     </>
+  );
+}
+
+/** The ghost CTA shared by standard and promoted plan cards. */
+function PlanCta({ href, plan }: { href: string; plan: PricingPlan }) {
+  return (
+    <Button
+      href={href}
+      variant="ghost"
+      className="s06-card-cta"
+      aria-label={`${plan.ctaLabel} about the ${plan.name} plan`}
+    >
+      {plan.ctaLabel}
+      <span aria-hidden="true"> →</span>
+    </Button>
   );
 }
 
@@ -233,6 +255,18 @@ export function Membership({
               <p className="s06-deck">{pricing.deck}</p>
             </Reveal>
           )}
+
+          <Reveal delayMs={105}>
+            <p className="mt-3 text-sm text-(--text-secondary)">
+              Not sure where to begin?{" "}
+              <Link
+                href="/start"
+                className="factory-focus text-(--brand-secondary) underline-offset-4 hover:underline"
+              >
+                Start here →
+              </Link>
+            </p>
+          </Reveal>
         </div>
 
         {/*
@@ -248,7 +282,10 @@ export function Membership({
               <span aria-hidden="true" className="s06-campaign-mark" />
               <span className="s06-campaign-eyebrow">{offer.eyebrow}</span>
               <span className="s06-campaign-title">{offer.title}</span>
-              <span className="s06-campaign-state">{offer.stateLabel}</span>
+              <span className="s06-campaign-state">
+                <span aria-hidden="true" className="s06-campaign-dot" />
+                {offer.stateLabel}
+              </span>
               {campaignEndsOn && (
                 <span className="s06-campaign-meta">
                   {offerEngine.endsLabel} {campaignEndsOn}
@@ -264,50 +301,62 @@ export function Membership({
             <ul className="s06-register" role="list">
               {visiblePlans.map((plan, i) => {
                 const promo = planOffers.get(plan.id);
-                return (
-                  <li
-                    key={plan.id}
-                    className="s06-card"
-                    // Drives the accent top rule. Absent on every plan the
-                    // campaign does not reference, which is what keeps those
-                    // cards identical to their pre-campaign rendering.
-                    data-promoted={promo ? "true" : undefined}
-                  >
-                    <span className="s06-card-index" aria-hidden="true">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
+                const index = String(i + 1).padStart(2, "0");
 
-                    <div className="s06-card-body">
-                      <h3 className="s06-card-name">{plan.name}</h3>
-                      <p className="s06-card-price">
-                        {promo ? (
-                          <PromoPriceLines promo={promo} />
-                        ) : (
-                          <PriceLine entry={plan} />
-                        )}
-                      </p>
-                      {promo ? (
-                        <p className="s06-card-promo-note">
+                /*
+                 * PROMOTED CARD — its own vertical composition. The standard
+                 * card is a single horizontal row (index | body | CTA); that
+                 * row has no room for a badge plus two labelled amounts, which
+                 * is what made promoted cards look cramped. Here the card
+                 * stacks: header (index + discount badge), plan name, the
+                 * offer/regular price pair, a terms line, then a full-width CTA.
+                 */
+                if (promo) {
+                  return (
+                    <li key={plan.id} className="s06-card" data-promoted="true">
+                      <div className="s06-promo-head">
+                        <span className="s06-card-index" aria-hidden="true">
+                          {index}
+                        </span>
+                        <span className="s06-promo-badge">
                           {promo.percentage}% {offerEngine.discountLabel}
+                        </span>
+                      </div>
+
+                      <div className="s06-promo-body">
+                        <h3 className="s06-card-name">{plan.name}</h3>
+                        <p className="s06-promo-prices">
+                          <PromoPriceLines promo={promo} />
+                        </p>
+                        <p className="s06-card-promo-note">
+                          {plan.term}
                           <span aria-hidden="true" className="s06-promo-sep">
                             ·
                           </span>
                           {offer?.eyebrow}
                         </p>
-                      ) : (
-                        <p className="s06-card-term">{plan.term}</p>
-                      )}
+                      </div>
+
+                      <PlanCta href={whatsappHref} plan={plan} />
+                    </li>
+                  );
+                }
+
+                return (
+                  <li key={plan.id} className="s06-card">
+                    <span className="s06-card-index" aria-hidden="true">
+                      {index}
+                    </span>
+
+                    <div className="s06-card-body">
+                      <h3 className="s06-card-name">{plan.name}</h3>
+                      <p className="s06-card-price">
+                        <PriceLine entry={plan} />
+                      </p>
+                      <p className="s06-card-term">{plan.term}</p>
                     </div>
 
-                    <Button
-                      href={whatsappHref}
-                      variant="ghost"
-                      className="s06-card-cta"
-                      aria-label={`${plan.ctaLabel} about the ${plan.name} plan`}
-                    >
-                      {plan.ctaLabel}
-                      <span aria-hidden="true"> →</span>
-                    </Button>
+                    <PlanCta href={whatsappHref} plan={plan} />
                   </li>
                 );
               })}

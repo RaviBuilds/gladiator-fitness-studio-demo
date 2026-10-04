@@ -39,8 +39,20 @@ export interface Business {
   hours: BusinessHours[];
   /** Verified Google Maps / Place URL */
   mapUrl: string;
-  /** Single accent token (hex/hsl), contrast-checked against fixed base tokens */
+  /**
+   * PRIMARY brand token (hex/hsl) — action / energy / major brand emphasis.
+   * Injected as --accent (aliased --brand-primary) in app/layout.tsx.
+   * Contrast-checked against fixed base tokens.
+   */
   accentColor: string;
+  /**
+   * SECONDARY brand token (hex/hsl) — supporting hierarchy: eyebrows,
+   * metadata, technical marks, secondary states, focus indicators.
+   * Injected as --brand-secondary in app/layout.tsx; every derived
+   * --brand-secondary-* variant is computed from it in app/globals.css.
+   * This is the ONLY place a gym's secondary hex should be written.
+   */
+  secondaryColor: string;
 }
 
 export interface Service {
@@ -508,10 +520,80 @@ export interface HeroSlide {
   /** Horizontal placement of the slide's athlete cutout within the frame. */
   subjectAlign?: "left" | "center" | "right";
   subheadline?: string;
+  /**
+   * Data-driven CTA sources (preferred). When present, components/sections/
+   * Hero.tsx resolves them through components/sections/fitnessToolsLogic.ts
+   * into the concrete label/href fields below before the slide reaches
+   * HeroSlider. Slides without `cta` keep using the legacy fields unchanged.
+   */
+  cta?: HeroSlideCtas;
   primaryCtaLabel?: string;
   primaryCtaHref?: string;
+  /** Render a decorative, aria-hidden "→" inside the primary CTA. */
+  primaryCtaArrow?: boolean;
   secondaryCtaLabel?: string;
   secondaryCtaHref?: string;
+  /** Render a decorative, aria-hidden "→" inside the secondary CTA. */
+  secondaryCtaArrow?: boolean;
+}
+
+/* ===========================================================================
+ * INTERACTIVE FITNESS TOOLS — registry contract (lib/fitness-tools.ts)
+ *
+ * One entry per guided, personalised experience the site offers (/start,
+ * /journey, /first-30-days). Hero CTAs and the Training
+ * Intelligence tools block both read this registry, so a tool's name, route
+ * and copy live in exactly one place.
+ * ======================================================================== */
+
+export type FitnessToolId = "starting-point" | "journey" | "first-30-days";
+
+export interface FitnessTool {
+  id: FitnessToolId;
+  /** Display index, e.g. "01". Distinguishes tools without relying on colour. */
+  index: string;
+  /** Customer-facing tool name, e.g. "Find Your Starting Point". */
+  name: string;
+  /** One value-oriented sentence. Only facts the tool actually delivers. */
+  description: string;
+  /** Short mono tag describing the format, e.g. "5 questions". */
+  meta: string;
+  /** Descriptive CTA label used in the Training Intelligence tools block. */
+  ctaLabel: string;
+  /** CTA label used on a hero slide. Defaults to `name`. */
+  heroCtaLabel?: string;
+  /**
+   * Real route of the tool, e.g. "/start". `null` means the tool has no
+   * destination yet — it then never renders anywhere, and hero slides that
+   * reference it fall back to their configured fallback action.
+   */
+  href: string | null;
+  /** Master switch. A tool renders only when `enabled` AND `href` is set. */
+  enabled: boolean;
+}
+
+/** A concrete, non-tool hero action (used directly or as a tool fallback). */
+export interface HeroLinkAction {
+  label: string;
+  /** Internal route ("/x") or in-page section anchor ("#section"). */
+  href: string;
+}
+
+export type HeroCtaSource =
+  | {
+      type: "tool";
+      toolId: FitnessToolId;
+      /** Used while the tool is unavailable (disabled or no route yet). */
+      fallback?: HeroLinkAction;
+      /** Optional subheadline applied only when the tool resolves. */
+      subheadline?: string;
+    }
+  | { type: "whatsapp"; label: string }
+  | ({ type: "link" } & HeroLinkAction);
+
+export interface HeroSlideCtas {
+  primary: HeroCtaSource;
+  secondary?: HeroCtaSource;
 }
 
 export interface HeroConfiguration {
@@ -523,6 +605,65 @@ export interface FaqItem {
   id: string;
   question: string;
   answer: string;
+}
+
+/* ===========================================================================
+ * /first-30-days — "Plan Your First 30 Days" (lib/first-30-days.ts)
+ *
+ * CAPABILITY CONTRACT. Any result content that would describe an onboarding
+ * service (an orientation, a tour, a trial, ...) declares the capability it
+ * requires. A capability renders as a claim ONLY when `verified: true` with a
+ * documented `source`. Otherwise the tool turns it into a question the visitor
+ * can ask the gym, or omits it — it never promises the service.
+ * ======================================================================== */
+
+export type OnboardingCapabilityId =
+  | "orientation"
+  | "tour"
+  | "trainerIntro"
+  | "assessment"
+  | "trialSession"
+  | "checkIns";
+
+export interface OnboardingCapability {
+  id: OnboardingCapabilityId;
+  /** Only `true` when the gym owner has confirmed the service. */
+  verified: boolean;
+  /** Short display label, e.g. "Floor orientation". */
+  label: string;
+  /** One factual sentence shown when verified, e.g. "A coach walks new members through the floor." */
+  detail: string;
+  /** Where the confirmation came from (owner email, call note). Required for verified:true. */
+  source?: string;
+}
+
+export interface First30DaysImage {
+  src: string;
+  /** Describes only what is in the frame — no facility claim for campaign images. */
+  alt: string;
+  objectPosition?: string;
+  objectPositionMobile?: string;
+}
+
+export interface First30DaysFact {
+  id: string;
+  /** Short label, e.g. "Landmark". */
+  label: string;
+  /** Verified / publicly reported value, e.g. "Opposite Leaf Hospital". */
+  value: string;
+}
+
+export interface First30DaysConfiguration {
+  /** Every image is optional; a missing one renders the card text-only. */
+  images: {
+    hero?: First30DaysImage;
+    firstVisit?: First30DaysImage;
+    weeklyRhythm?: First30DaysImage;
+    reflection?: First30DaysImage;
+  };
+  capabilities: OnboardingCapability[];
+  /** Practical, sourced first-visit facts (landmark, parking, access). */
+  firstVisitFacts: First30DaysFact[];
 }
 
 /**
@@ -847,6 +988,12 @@ export interface TrainingIntelligenceConfiguration {
    * href comes from the existing site-wide WhatsApp action.
    */
   ctaMessageTemplate: string;
+  /** Mono label above the tools block, e.g. "Training tools". */
+  toolsEyebrow: string;
+  /** Tools block heading (rendered as h3). */
+  toolsHeading: string;
+  /** One-sentence tools block intro. */
+  toolsDeck: string;
   /** Standing safety line. Educational scope, explicitly not medical advice. */
   disclaimer: string;
   /** Optional reviewer attribution. Render only if the gym can stand behind it. */

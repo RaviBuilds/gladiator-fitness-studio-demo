@@ -24,7 +24,10 @@ export function RatingStars({
   });
 
   const trackClass = variant === "google" ? "text-[#DADCE0]" : "text-(--border)";
-  const fillClass = variant === "google" ? "text-[#FBBC04]" : "text-(--accent)";
+  // Default (dark surfaces: rating dial, Trust rail) uses the SECONDARY brand
+  // colour — a rating is supporting information, not an action. The Google
+  // variant keeps its source-identity hex.
+  const fillClass = variant === "google" ? "text-[#FBBC04]" : "text-(--brand-secondary)";
 
   return (
     <div

@@ -410,7 +410,7 @@ export function HeroSlider({
                 </svg>
                 <span
                   aria-hidden="true"
-                  className="absolute right-[6%] top-[22%] hidden h-[1px] w-[7%] bg-(--accent) opacity-40 lg:block"
+                  className="absolute right-[6%] top-[22%] hidden h-[1px] w-[7%] bg-(--brand-secondary) opacity-40 lg:block"
                 />
 
                 {/* Depth zone 3 — grain. */}
@@ -597,7 +597,7 @@ export function HeroSlider({
                 className={`factory-meta-card ml-auto ${reducedMotion ? "" : "factory-stagger-in"}`}
                 style={reducedMotion ? undefined : { animationDelay: `${delays.metadata}ms` }}
               >
-                <p className="font-mono text-[clamp(1.5rem,2.1vw,2rem)] font-semibold leading-none text-(--accent)">
+                <p className="font-mono text-[clamp(1.5rem,2.1vw,2rem)] font-semibold leading-none text-(--brand-secondary)">
                   {motif.value}
                 </p>
                 <p className="mt-2 max-w-[8.5rem] text-[0.5625rem] uppercase leading-[1.6] tracking-[0.2em] text-(--text-secondary)">
@@ -621,7 +621,7 @@ export function HeroSlider({
           Scroll
         </span>
         <span
-          className={`h-12 w-px bg-(--accent) ${reducedMotion ? "" : "factory-scroll-cue-line"}`}
+          className={`h-12 w-px bg-(--brand-secondary) ${reducedMotion ? "" : "factory-scroll-cue-line"}`}
         />
       </div>
 
@@ -727,10 +727,12 @@ export function HeroSlider({
           >
             <Button href={slide.primaryCtaHref ?? whatsappHref} variant="primary">
               {slide.primaryCtaLabel ?? "Chat on WhatsApp"}
+              {slide.primaryCtaArrow && <span aria-hidden="true">→</span>}
             </Button>
             {slide.secondaryCtaLabel && slide.secondaryCtaHref && (
               <Button href={slide.secondaryCtaHref} variant="secondary">
                 {slide.secondaryCtaLabel}
+                {slide.secondaryCtaArrow && <span aria-hidden="true">→</span>}
               </Button>
             )}
           </div>
@@ -797,7 +799,7 @@ export function HeroSlider({
                   type="button"
                   onClick={toggleUserPause}
                   aria-label={userPaused ? "Play slideshow" : "Pause slideshow"}
-                  className="factory-focus flex h-9 w-9 items-center justify-center border border-(--border) text-(--text-primary) transition-colors hover:border-(--accent) hover:text-(--accent)"
+                  className="factory-focus flex h-9 w-9 items-center justify-center border border-(--border) text-(--text-primary) transition-colors hover:border-(--brand-secondary) hover:text-(--brand-secondary)"
                 >
                   <svg aria-hidden="true" viewBox="0 0 10 12" className="h-3 w-2.5" fill="currentColor">
                     {userPaused ? (
@@ -817,7 +819,7 @@ export function HeroSlider({
                 type="button"
                 onClick={prev}
                 aria-label="Previous slide"
-                className="factory-focus flex h-9 w-9 items-center justify-center border border-(--border) text-(--text-primary) transition-colors hover:border-(--accent) hover:text-(--accent)"
+                className="factory-focus flex h-9 w-9 items-center justify-center border border-(--border) text-(--text-primary) transition-colors hover:border-(--brand-secondary) hover:text-(--brand-secondary)"
               >
                 <svg
                   aria-hidden="true"
@@ -834,7 +836,7 @@ export function HeroSlider({
                 type="button"
                 onClick={next}
                 aria-label="Next slide"
-                className="factory-focus flex h-9 w-9 items-center justify-center border border-(--border) text-(--text-primary) transition-colors hover:border-(--accent) hover:text-(--accent)"
+                className="factory-focus flex h-9 w-9 items-center justify-center border border-(--border) text-(--text-primary) transition-colors hover:border-(--brand-secondary) hover:text-(--brand-secondary)"
               >
                 <svg
                   aria-hidden="true"

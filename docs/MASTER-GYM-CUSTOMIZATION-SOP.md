@@ -57,6 +57,14 @@ Edit every file under `lib/`:
   `artifact`. Do not rewrite the training principles, coach notes or the
   disclaimer, and never add a number to any of them.
 - `lib/faq.ts` — only questions with real, known answers.
+- `lib/first-30-days.ts` — the Plan Your First 30 Days tool: replace the four
+  images in `public/assets/first-30-days/` (keep the names) and their `alt`
+  text; set `firstVisitFacts` from verified/publicly reported facts only
+  (label publicly reported ones as such). Every onboarding capability
+  (orientation, tour, trainer introduction, assessment, trial session,
+  check-ins) stays `verified: false` until the owner confirms it in writing —
+  then set `verified: true` AND record that confirmation in `source`. Without
+  both, the tool phrases the service as a question to ask, never a promise.
 - `lib/contact.ts` — Section 10 copy: headline, supporting line, CTA label,
   field labels, validation wording, success/error messages, the email subject
   pattern and the background art. Set `dataVerified: true` only once
@@ -79,11 +87,28 @@ Never prefix secrets with `NEXT_PUBLIC_`. With any of the three contact
 variables missing, `/api/contact` answers `503` with safe copy and the form
 tells the visitor to use WhatsApp or phone — it never reports a false send.
 
-## 8. Set Accent Color
+## 8. Set Brand Colors
 
-One token: `lib/business.ts`'s `accentColor`. No component modifications.
-Verify contrast against the fixed dark background/text tokens before
-finalizing.
+Two tokens, both in `lib/business.ts`. No component or CSS modifications.
+
+- `accentColor` — PRIMARY brand colour (action / energy / major emphasis:
+  primary CTA fills, selected + active states, hero brand moment). Injected
+  as `--accent`, aliased `--brand-primary`.
+- `secondaryColor` — SECONDARY brand colour (supporting hierarchy:
+  eyebrows, mono metadata, technical ticks, supporting icons, secondary card
+  segments, nav underline, secondary hover states, keyboard focus). Injected
+  as `--brand-secondary`; `-hover`, `-active`, `-soft`, `-border`,
+  `-foreground` and the light-surface `-ink` are derived automatically in
+  `app/globals.css`. If a gym has no secondary colour, set it equal to
+  `accentColor`.
+
+Enter each authentic brand hex exactly once. Never write it into CSS or a
+component. Contrast checks before finalizing:
+- `secondaryColor` against `--bg-primary` (#09090b) ≥ 4.5:1 — it is used
+  as small text and as the focus ring on dark surfaces.
+- Dark text on a `secondaryColor` fill ≥ 4.5:1 (`--brand-secondary-foreground`
+  is `--bg-primary`). If the secondary is dark, revisit that token.
+- White on `accentColor` ≥ 4.5:1 (primary CTA text).
 
 ## 9. Validate
 

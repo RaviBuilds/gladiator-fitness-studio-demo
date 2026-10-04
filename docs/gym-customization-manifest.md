@@ -45,7 +45,7 @@ Render order, with the flag that gates each section (`lib/sections.ts`):
 | 10 | `Contact` | `sections.contact` | numeral from `contact.index` |
 | 11 | `Location` | `sections.location` | |
 | 12 | `FinalCta` | always | |
-| — | `Footer`, `WhatsAppButton`, `ContactDialog` | always | |
+| — | `Footer`, `FloatingContact`, `ContactDialog` | always | |
 
 `export const revalidate = 3600` in `app/page.tsx` exists so the offer engine
 re-evaluates hourly. Do not remove it.
@@ -54,7 +54,7 @@ re-evaluates hourly. Do not remove it.
 
 | File | Export | Role |
 |------|--------|------|
-| `business.ts` | `business: Business` | identity, contact, address, hours, map, accent |
+| `business.ts` | `business: Business` | identity, contact, address, hours, map, primary + secondary brand colours |
 | `seo.ts` | `seo: SEOConfiguration` | title/description/canonical/ogImage/robots |
 | `schema.ts` | `buildLocalBusinessSchema()` | **code, frozen** |
 | `sections.ts` | `sections: SectionConfiguration` | 14 section flags |
@@ -101,6 +101,7 @@ Type: `Business` (`lib/types.ts:31`).
 | Tagline | `business.tagline` | `string` | B | yes | `FinalCta` **H2 headline**, `Footer` sub-line, `KineticStrip` band 01 | none — template tagline renders | YES | no | YES |
 | Description | `business.description` | `string` | B | yes | `About` deck (split on `\n` into paragraphs) | none — template description renders | YES | no | YES |
 | Accent colour | `business.accentColor` | hex/hsl `string` | C | yes | `app/layout.tsx` → `--accent` inline style on `<html>` | demo lime `#D6FF3F` | NO | YES (pick from logo, contrast-check) | YES |
+| Secondary colour | `business.secondaryColor` | hex/hsl `string` | C | yes | `app/layout.tsx` → `--brand-secondary` inline style on `<html>`; variants derived in `app/globals.css` | — (falls back to accent) | NO | YES (brand reference, contrast-check vs `--bg-primary`) | YES |
 
 Notes:
 - The gym name is **never rendered as visible text in the header** — only the
@@ -507,7 +508,7 @@ elsewhere):
   People. The gym in motion."; `Faq` `09` / "COMMON QUESTIONS."; `Location`
   `11` / "Find us." / "Get directions"; `FinalCta` "12 — Ready when you are" /
   "Programs · Pricing · First session"; `Footer` "Explore" / "Follow" / the
-  Blogspage AI attribution and `AGENCY_URL`; `WhatsAppButton` aria-label.
+  Blogspage AI attribution and `AGENCY_URL`; `FloatingContact` aria-label.
 - Three **hardcoded asset paths** (change the *file*, never the component):
   - `components/sections/Header.tsx:57` → `/assets/brand/ironline-training-demo-logo.jpg`
   - `components/sections/Faq.tsx:19` → `/assets/gallery/ironline-demo-gallery-02.jpg`

@@ -33,7 +33,9 @@ customization projects, not redesign projects.
   accessibility implementation, SEO implementation code, schema builder,
   image handling, WhatsApp/Reviews/Gallery components, navigation, footer.
 - Customizable: everything under `lib/*.ts` and `public/assets/*`, plus the
-  single `accentColor` token.
+  two brand-color tokens `accentColor` (primary) and `secondaryColor`
+  (secondary). Colour ROLES are fixed — see the role table in
+  `docs/MASTER-GYM-WEBSITE-ARCHITECTURE.md`.
 - Full matrix: `docs/MASTER-GYM-WEBSITE-ARCHITECTURE.md`.
 
 ## Dependency Discipline

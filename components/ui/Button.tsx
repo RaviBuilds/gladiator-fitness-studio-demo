@@ -7,11 +7,14 @@ const base =
   "factory-focus inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold tracking-wide uppercase transition-colors duration-200";
 
 const variants: Record<Variant, string> = {
+  // PRIMARY action — the strongest brand signal.
   primary:
     "bg-(--accent) text-(--accent-foreground) hover:bg-(--accent-hover)",
+  // SECONDARY action — neutral at rest, secondary brand colour on hover.
   secondary:
-    "border border-(--border) text-(--text-primary) hover:border-(--accent) hover:text-(--accent)",
-  ghost: "text-(--text-primary) hover:text-(--accent) underline-offset-4 hover:underline",
+    "border border-(--border) text-(--text-primary) hover:border-(--brand-secondary-border) hover:text-(--brand-secondary)",
+  // TERTIARY action — text only.
+  ghost: "text-(--text-primary) hover:text-(--brand-secondary) underline-offset-4 hover:underline",
 };
 
 /**
@@ -35,6 +38,43 @@ export function SubmitButton({
       type="submit"
       disabled={disabled}
       className={`${base} ${variants[variant]} disabled:opacity-60 disabled:cursor-not-allowed ${className}`}
+    >
+      {children}
+    </button>
+  );
+}
+
+/**
+ * Same visual language as Button, but a real <button type="button"> for
+ * in-page controls that are not navigation and not form submission (the
+ * /start check's Back/Next/Start-over). Kept beside SubmitButton rather than
+ * making Button polymorphic, and reuses the exact same base/variants so the
+ * control can never drift out of sync with the site button system.
+ */
+export function ActionButton({
+  variant = "primary",
+  children,
+  className = "",
+  disabled,
+  onClick,
+  ...rest
+}: {
+  variant?: Variant;
+  children: ReactNode;
+  className?: string;
+  disabled?: boolean;
+  onClick?: () => void;
+} & Omit<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  "className" | "onClick" | "disabled" | "type"
+>) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      className={`${base} ${variants[variant]} disabled:opacity-60 disabled:cursor-not-allowed ${className}`}
+      {...rest}
     >
       {children}
     </button>

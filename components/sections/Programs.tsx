@@ -1,4 +1,5 @@
 import { services } from "@/lib/services";
+import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/motion/Reveal";
 import { ProgramIndex } from "@/components/sections/ProgramIndex";
@@ -46,7 +47,7 @@ export function Programs({ whatsappHref }: { whatsappHref: string }) {
             <span className="factory-index" aria-hidden="true">
               02
             </span>
-            <span className="h-px w-8 bg-(--accent) sm:w-12" aria-hidden="true" />
+            <span className="h-px w-8 bg-(--brand-secondary) sm:w-12" aria-hidden="true" />
             <span className="factory-eyebrow">Programs</span>
           </div>
         </Reveal>
@@ -72,6 +73,18 @@ export function Programs({ whatsappHref }: { whatsappHref: string }) {
 
         <Reveal delayMs={120}>
           <ProgramIndex programs={verified} whatsappHref={whatsappHref} />
+        </Reveal>
+
+        <Reveal delayMs={150}>
+          <p className="mt-8 text-sm text-(--text-secondary)">
+            Not sure which training fits you?{" "}
+            <Link
+              href="/start"
+              className="factory-focus text-(--brand-secondary) underline-offset-4 hover:underline"
+            >
+              Find your starting point →
+            </Link>
+          </p>
         </Reveal>
       </Container>
     </section>

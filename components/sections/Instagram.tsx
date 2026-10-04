@@ -89,7 +89,7 @@ export function Instagram() {
               </span>
               <span className="factory-eyebrow">Instagram</span>
             </div>
-            <h2 className="mt-3 text-[clamp(2rem,6vw,4.5rem)] font-bold leading-[0.95] tracking-tight text-(--text-primary) break-words [overflow-wrap:anywhere]">
+            <h2 className="mt-3 text-[clamp(1.25rem,5.4vw,2.75rem)] font-bold leading-[1.05] tracking-tight text-(--text-primary) break-words [overflow-wrap:anywhere] lg:text-[clamp(1.75rem,3.2vw,3.25rem)]">
               {instagramConfig.handle}
             </h2>
             <p className="mt-4 font-mono text-sm tracking-wide text-(--text-secondary) uppercase">

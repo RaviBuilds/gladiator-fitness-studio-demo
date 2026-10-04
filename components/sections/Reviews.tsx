@@ -1,5 +1,6 @@
 import { googleReviews } from "@/lib/reviews";
 import { business } from "@/lib/business";
+import { buildWhatsAppHref } from "@/lib/whatsapp";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { RatingStars } from "@/components/ui/RatingStars";
@@ -51,9 +52,7 @@ export function Reviews() {
   const profileUrl = googleBusinessProfileUrl.trim();
   const ratingLabel = rating.toFixed(1);
   const ratingAccessibleName = buildRatingAccessibleName(rating, reviewCount);
-  const whatsappHref = `https://wa.me/${business.whatsapp.number.replace(/[^\d]/g, "")}?text=${encodeURIComponent(
-    business.whatsapp.message
-  )}`;
+  const whatsappHref = buildWhatsAppHref(business.whatsapp);
 
   return (
     <section
@@ -71,7 +70,7 @@ export function Reviews() {
             <span className="factory-index" aria-hidden="true">
               06
             </span>
-            <span className="h-px w-8 bg-(--accent) sm:w-12" aria-hidden="true" />
+            <span className="h-px w-8 bg-(--brand-secondary) sm:w-12" aria-hidden="true" />
             <span className="factory-eyebrow">Reviews</span>
           </div>
 

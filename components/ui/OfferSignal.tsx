@@ -35,8 +35,10 @@ import type {
  * leading edge, an accent eyebrow, the campaign name as the dominant type, and
  * the discount ladder as the second-loudest thing on the card. Deliberately
  * absent: sale stickers, red graphics, oversized percent symbols, gradients,
- * countdowns, badges and any looping or pulsing animation. The single
- * entrance animation is the hero's existing stagger, and it respects
+ * countdowns and badges. The one looping cue is the "Live" chip: a slowly
+ * beeping green dot and a softly glowing border, shared with the pricing
+ * register's campaign marker (see "LIVE CHIP" in app/globals.css). The entrance
+ * animation is the hero's existing stagger, and all motion respects
  * prefers-reduced-motion like everything else.
  *
  * PRICING BOUNDARY

@@ -101,7 +101,8 @@ discovered and documented as a deliberate, explicit exception.
 2. Replace assets under `public/assets/*`.
 3. Edit the typed data files under `lib/*`.
 4. Set environment variables (secrets only, never public).
-5. Set the accent color in `lib/business.ts`.
+5. Set the primary (`accentColor`) and secondary (`secondaryColor`) brand
+   colors in `lib/business.ts`.
 6. `npm run lint && npm run build`.
 7. Browser QA across desktop/tablet/mobile.
 8. Deploy.
@@ -135,13 +136,23 @@ docx should mentally substitute `lib/` for `data/`.
   (editorial athletic design). Per-gym font switching would erode the
   recognizable design language that makes the Factory a product rather than a
   one-off build each time.
-- **Accent color is configurable** because it is the cheapest, safest lever
-  for per-gym visual identity — it does not touch typography, spacing, layout,
-  or component shape, so it cannot break the design system.
+- **Two brand colors are configurable** (`accentColor` primary,
+  `secondaryColor` secondary) because they are the cheapest, safest lever
+  for per-gym visual identity — they do not touch typography, spacing,
+  layout, or component shape, so they cannot break the design system. The
+  ROLES are fixed; a gym supplies hues only:
+
+  | Role | Token(s) | Used for |
+  |---|---|---|
+  | Primary | `--accent` / `--brand-primary`, `--accent-hover`, `--accent-foreground` | Primary CTA fills, selected + active states, hero brand moment, key structural rules, promotional figures |
+  | Secondary | `--brand-secondary`, `-hover`, `-active`, `-soft`, `-border`, `-foreground`, `-ink` (light surfaces only) | Eyebrows, mono metadata, technical ticks + measurement marks, supporting icons, secondary card segments, progress indicators, nav underline, secondary hover states, keyboard focus |
+  | Neutral | `--text-*`, `--bg-*`, `--surface*`, `--border` | Headings, body copy, surfaces, borders |
+
+  Not every section uses both brand colors; the varied rhythm is intentional.
 - **Social/reviews are data-driven and manually curated** because live
   scraping/API integration is a runtime dependency, a cost, and a failure
   surface. Manually curated data is predictable, fast, and controllable.
 - **This is suitable for rapid gym cloning** because the entire customization
-  surface is: typed data files, an assets folder, one accent token, and
+  surface is: typed data files, an assets folder, two brand-color tokens, and
   environment variables. Nothing else needs to be touched for a standard
   clone.

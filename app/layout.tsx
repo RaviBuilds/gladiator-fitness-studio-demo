@@ -56,10 +56,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-      // The only per-gym visual token: accent color from lib/business.ts.
-      // See docs/MASTER-GYM-WEBSITE-ARCHITECTURE.md — accent never alters
-      // typography, spacing, layout, or component shape.
-      style={{ "--accent": business.accentColor } as CSSProperties}
+      // The only per-gym visual tokens: primary (accent) and secondary brand
+      // colors from lib/business.ts. Every derived variant is computed in
+      // app/globals.css. See docs/MASTER-GYM-WEBSITE-ARCHITECTURE.md — brand
+      // colors never alter typography, spacing, layout, or component shape.
+      style={
+        {
+          "--accent": business.accentColor,
+          "--brand-secondary": business.secondaryColor,
+        } as CSSProperties
+      }
     >
       <body className="min-h-full flex flex-col">
         {children}

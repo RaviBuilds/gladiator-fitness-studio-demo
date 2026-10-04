@@ -50,7 +50,7 @@ export function FaqAccordion({ items }: { items: FaqItem[] }) {
                   </span>
                 </span>
                 <span
-                  className="shrink-0 w-8 h-8 flex items-center justify-center border border-(--border) text-(--accent) text-xl font-light"
+                  className="shrink-0 w-8 h-8 flex items-center justify-center border border-(--border) text-(--brand-secondary) text-xl font-light"
                   aria-hidden="true"
                 >
                   {isOpen ? "−" : "+"}

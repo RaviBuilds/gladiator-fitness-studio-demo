@@ -51,10 +51,10 @@ export function Faq() {
         </svg>
 
         {/* Registration crosses */}
-        <svg className="absolute top-1/3 left-[15%] w-4 h-4 stroke-current text-(--accent) opacity-30" fill="none" strokeWidth="1">
+        <svg className="absolute top-1/3 left-[15%] w-4 h-4 stroke-current text-(--brand-secondary) opacity-30" fill="none" strokeWidth="1">
           <path d="M2,0 L2,4 M0,2 L4,2" />
         </svg>
-        <svg className="absolute bottom-1/4 right-[20%] w-4 h-4 stroke-current text-(--accent) opacity-30" fill="none" strokeWidth="1">
+        <svg className="absolute bottom-1/4 right-[20%] w-4 h-4 stroke-current text-(--brand-secondary) opacity-30" fill="none" strokeWidth="1">
           <path d="M2,0 L2,4 M0,2 L4,2" />
         </svg>
       </div>

@@ -27,19 +27,18 @@ import type { TransformationItem } from "./types";
 // be deleted or replaced with real, member-approved measurements before any
 // gym build goes live (see docs/MASTER-GYM-CUSTOMIZATION-SOP.md).
 //
-// Case 01 is deliberately data-COMPLETE and case 02 deliberately data-SPARSE
-// (journey + duration + two training lines only): the pair is the standing
-// proof that the same component renders a full dossier and a thin one without
-// empty rails, dashes or placeholder cells.
+// Both demo cases are currently data-COMPLETE. The component also renders a
+// sparse case (journey + duration + a couple of training lines only) without
+// empty rails, dashes or placeholder cells — omit fields to see that.
 export const transformations: TransformationItem[] = [
   {
     image: "/assets/transformations/ironline-demo-transformation-01.webp",
     imageAlt:
-      "Demo member combined before and after progress photograph, front view",
+      "Fat loss member combined before and after progress photograph, front view",
     beforeLabel: "Before",
     afterLabel: "After",
     mediaAspect: "square",
-    personName: "Demo Member",
+    personName: "Fat Loss Member",
     journey: "Fat loss",
     story:
       "Placeholder story text used only to test the transformations layout. Not a real member account, and no figures or timeframes are implied.",
@@ -75,23 +74,42 @@ export const transformations: TransformationItem[] = [
   {
     image: "/assets/transformations/ironline-demo-transformation-02.webp",
     imageAlt:
-      "Demo member combined before and after progress photograph, front view",
+      "Weight loss member combined before and after progress photograph, front view",
     beforeLabel: "Before",
     afterLabel: "After",
     mediaAspect: "square",
-    personName: "Demo Member",
+    personName: "Weight Loss Member",
     journey: "Weight loss",
     story:
       "Placeholder story text used only to test the transformations layout. Not a real member account, and no figures or timeframes are implied.",
-    // Deliberately thin: only a duration was recorded, no nutrition notes and
-    // no coach annotation. The dossier must still compose correctly.
+    // Synthetic layout-test figures, same status as case 01 (see the warning
+    // at the top of this file). Replace with real, member-approved data.
     metrics: {
       durationMonths: 4,
+      beforeWeightKg: 85,
+      afterWeightKg: 74,
+      beforeBmi: 28.1,
+      afterBmi: 24.5,
+      beforeBodyFatPct: 27.8,
+      afterBodyFatPct: 20.4,
       sessionsPerWeek: 5,
     },
     training: [
-      { label: "Strength", value: "4x / week" },
+      { label: "Strength", value: "4x / week", note: "Coach-led" },
       { label: "Conditioning", value: "10 min / session" },
+      { label: "Mobility", value: "2x / week" },
+      { label: "Personal training", value: "1 hr / week" },
+    ],
+    nutrition: [
+      { label: "Protein", value: "Balanced plan" },
+      { label: "Added sugar", value: "Reduced" },
+      { label: "Meal timing", value: "Consistent" },
+    ],
+    coachNotes: [
+      "Training consistency",
+      "Portion control",
+      "Daily step target",
+      "Sleep consistency",
     ],
     consentVerified: true,
   },

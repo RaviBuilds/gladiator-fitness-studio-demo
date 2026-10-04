@@ -36,7 +36,8 @@ interface Business {
   address: BusinessAddress;
   hours: BusinessHours[];
   mapUrl: string;       // verified Google Maps / Place URL
-  accentColor: string;  // single hex/hsl token, contrast-checked
+  accentColor: string;  // PRIMARY brand hex/hsl, contrast-checked (white text on it)
+  secondaryColor: string;  // SECONDARY brand hex/hsl, contrast-checked vs --bg-primary; set = accentColor if none
 }
 ```
 
@@ -532,3 +533,41 @@ interface FaqItem {
 
 Only generated from actual business information. If the information is not
 available, the FAQ entry is not created.
+
+
+## Plan Your First 30 Days — `lib/first-30-days.ts`
+
+```ts
+type OnboardingCapabilityId =
+  | "orientation" | "tour" | "trainerIntro" | "assessment" | "trialSession" | "checkIns";
+
+interface OnboardingCapability {
+  id: OnboardingCapabilityId;
+  verified: boolean;   // true ONLY after owner confirmation
+  label: string;       // e.g. "Floor orientation"
+  detail: string;      // one factual sentence shown when verified
+  source?: string;     // where the confirmation came from — required for verified:true
+}
+
+interface First30DaysConfiguration {
+  images: { hero?; firstVisit?; weeklyRhythm?; reflection? }; // { src, alt, objectPosition?, objectPositionMobile? }
+  capabilities: OnboardingCapability[];
+  firstVisitFacts: { id: string; label: string; value: string }[];
+}
+```
+
+**Claim gate.** Every result block in `components/sections/first30DaysLogic.ts`
+that would describe an onboarding service declares the capability it
+`requires`. A capability counts only when `verified: true` AND `source` is
+non-empty. Otherwise the block renders its `askInstead` question ("Ask
+whether someone can walk you through the equipment.") or is omitted. A
+verified Personal Training *service* (`lib/services.ts`, id
+`personal-training`) is never treated as an onboarding capability — it only
+produces the line "Personal training is offered. Ask how it works for new
+members." Images are optional; a missing image leaves its card text-only.
+Alt text describes only the frame (these are campaign images, not this gym's
+floor).
+
+The tool is an onboarding plan only: no exercises, sets, reps, calories,
+prices, outcomes or medical advice — enforced across every answer
+combination by `scripts/first-30-days.test.mjs`.

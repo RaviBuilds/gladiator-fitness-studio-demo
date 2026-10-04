@@ -102,10 +102,12 @@ export const heroConfiguration: HeroConfiguration = {
       subjectAlign: "right",
       subheadline:
         "A strength and conditioning floor built for people who train around a real schedule.",
-      primaryCtaLabel: "Chat on WhatsApp",
-      primaryCtaHref: undefined,
-      secondaryCtaLabel: "View Programs",
-      secondaryCtaHref: "#programs",
+      // Slide 01 leads with the first guided tool; this is the hero's single
+      // direct WhatsApp action (header + floating button cover the rest).
+      cta: {
+        primary: { type: "tool", toolId: "starting-point" },
+        secondary: { type: "whatsapp", label: "Chat on WhatsApp" },
+      },
     },
     {
       image: "/assets/hero/banner-image-02.png",
@@ -263,10 +265,18 @@ export const heroConfiguration: HeroConfiguration = {
       subjectAlign: "left",
       subheadline:
         "Small-group and personal coaching for people who want structure, not guesswork.",
-      primaryCtaLabel: "Chat on WhatsApp",
-      primaryCtaHref: undefined,
-      secondaryCtaLabel: "See Membership",
-      secondaryCtaHref: "#membership",
+      // Slide 02 leads with the journey tool. Its subheadline is swapped for a
+      // journey-specific line only while the tool resolves; if /journey is
+      // ever disabled the original coaching line above returns.
+      cta: {
+        primary: {
+          type: "tool",
+          toolId: "journey",
+          subheadline:
+            "Structure, not guesswork. Map a training path around your goal, your week and your starting point.",
+        },
+        secondary: { type: "link", label: "See Membership", href: "#membership" },
+      },
     },
     {
       image: "/assets/hero/banner-image-01.png",
@@ -437,10 +447,16 @@ export const heroConfiguration: HeroConfiguration = {
       subjectAlign: "center",
       subheadline:
         "Full racks, real plates, and enough floor space to train without waiting.",
-      primaryCtaLabel: "Chat on WhatsApp",
-      primaryCtaHref: undefined,
-      secondaryCtaLabel: undefined,
-      secondaryCtaHref: undefined,
+      // Slide 03 opens the third interactive tool (lib/fitness-tools.ts,
+      // "first-30-days"). If that registry entry is ever disabled, the slide
+      // shows the fallback below instead — never a dead link.
+      cta: {
+        primary: {
+          type: "tool",
+          toolId: "first-30-days",
+          fallback: { label: "Explore Programs", href: "#programs" },
+        },
+      },
     },
   ],
 };
