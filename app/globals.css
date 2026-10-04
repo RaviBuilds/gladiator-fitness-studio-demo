@@ -1338,6 +1338,7 @@ html {
   --hero-back-top: var(--hero-m-back-top);
   --hero-back-left: var(--hero-m-back-left);
   --hero-back-word-display: var(--hero-m-back-word-display);
+  --hero-back-indent: var(--hero-m-back-indent, 0em);
   --hero-middle-top: var(--hero-m-middle-top, 0%);
   --hero-middle-left: var(--hero-m-middle-left, 0%);
   --hero-middle-size: var(--hero-m-middle-size, var(--hero-type-size));
@@ -1380,6 +1381,7 @@ html {
     --hero-back-top: var(--hero-s-back-top);
     --hero-back-left: var(--hero-s-back-left);
     --hero-back-word-display: var(--hero-s-back-word-display);
+    --hero-back-indent: var(--hero-s-back-indent, 0em);
     --hero-middle-top: var(--hero-s-middle-top, 0%);
     --hero-middle-left: var(--hero-s-middle-left, 0%);
     --hero-middle-size: var(--hero-s-middle-size, var(--hero-type-size));
@@ -1402,6 +1404,7 @@ html {
     --hero-back-top: var(--hero-t-back-top);
     --hero-back-left: var(--hero-t-back-left);
     --hero-back-word-display: var(--hero-t-back-word-display);
+    --hero-back-indent: var(--hero-t-back-indent, 0em);
     --hero-middle-top: var(--hero-t-middle-top, 0%);
     --hero-middle-left: var(--hero-t-middle-left, 0%);
     --hero-middle-size: var(--hero-t-middle-size, var(--hero-type-size));
@@ -1424,6 +1427,7 @@ html {
     --hero-back-top: var(--hero-l-back-top);
     --hero-back-left: var(--hero-l-back-left);
     --hero-back-word-display: var(--hero-l-back-word-display);
+    --hero-back-indent: var(--hero-l-back-indent, 0em);
     --hero-middle-top: var(--hero-l-middle-top, 0%);
     --hero-middle-left: var(--hero-l-middle-left, 0%);
     --hero-middle-size: var(--hero-l-middle-size, var(--hero-type-size));
@@ -1446,6 +1450,7 @@ html {
     --hero-back-top: var(--hero-d-back-top);
     --hero-back-left: var(--hero-d-back-left);
     --hero-back-word-display: var(--hero-d-back-word-display);
+    --hero-back-indent: var(--hero-d-back-indent, 0em);
     --hero-middle-top: var(--hero-d-middle-top, 0%);
     --hero-middle-left: var(--hero-d-middle-left, 0%);
     --hero-middle-size: var(--hero-d-middle-size, var(--hero-type-size));
@@ -1529,6 +1534,12 @@ html {
 .factory-hero-back-word {
   display: var(--hero-back-word-display);
   margin-right: 0.2em;
+}
+
+/* Optional stagger for stacked back words (`backStackIndent`). Defaults to
+   0em, so inline layouts and frames that do not author it are unchanged. */
+.factory-hero-back-word + .factory-hero-back-word {
+  margin-left: var(--hero-back-indent);
 }
 
 /*

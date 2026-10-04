@@ -444,6 +444,12 @@ export interface HeroCompositionFrame {
    * interacting with the subject instead of running off-frame.
    */
   backWordLayout: "inline" | "stack";
+  /**
+   * Optional extra left offset for every back word after the first, only
+   * when `backWordLayout` is "stack" (e.g. "0.35em"). Staggers the stacked
+   * words into a composed cascade instead of a flush-left list. Defaults to 0.
+   */
+  backStackIndent?: string;
   /** Optional top edge of the middle (bridge) typography layer, % of zone height. */
   middleTop?: string;
   /** Optional left edge of the middle (bridge) typography layer, % of zone width. */

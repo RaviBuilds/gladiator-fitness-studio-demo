@@ -7,7 +7,7 @@ import type { HeroConfiguration } from "./types";
  *
  * Headlines use "\n" to mark an intentional editorial line break. HeroSlider
  * renders each segment as its own stacked display line rather than relying
- * on natural text wrapping — this is what gives the hero its oversized,
+ * on natural text wrapping â€” this is what gives the hero its oversized,
  * chaptered typographic composition. A headline without "\n" still renders
  * correctly as a single line.
  *
@@ -21,7 +21,7 @@ import type { HeroConfiguration } from "./types";
  * PLACEHOLDER DATA: replace with real per-gym imagery once client assets
  * are supplied; copy stays generic (no invented claims/stats).
  */
-// MASTER DEMO DATA — placeholder campaign slides for visual QA only.
+// MASTER DEMO DATA â€” placeholder campaign slides for visual QA only.
 export const heroConfiguration: HeroConfiguration = {
   slides: [
     {
@@ -30,7 +30,7 @@ export const heroConfiguration: HeroConfiguration = {
         "Athlete standing front-on with arms crossed and flexed, mid-workout.",
       eyebrow: "The Power",
       headline: "Build your power.",
-      // ONE headline — "BUILD YOUR POWER." — split across depth only. `back`
+      // ONE headline â€” "BUILD YOUR POWER." â€” split across depth only. `back`
       // renders behind the athlete cutout, `front` in front of it. No word is
       // repeated between the two groups.
       headlineLayers: {
@@ -47,9 +47,11 @@ export const heroConfiguration: HeroConfiguration = {
       // head/shoulders cut through BUILD YOUR, and `frontLeft` so POWER.
       // starts inside the wide torso band.
       composition: {
-        // Phones (<768px, also used for short phones — no `mobileShort`).
-        // Mirrors the desktop two-line reading: BUILD YOUR on one line,
-        // POWER. alone on the second, staggered right over the torso.
+        // Phones (<768px, also used for short phones â€” no `mobileShort`).
+        // BUILD / YOUR stacked on the left, ending just before the head so
+        // both words stay readable; only their tails tuck behind the
+        // head/traps. POWER. keeps its larger size below the stack,
+        // staggered right over the torso.
         mobile: {
           // ~12% larger athlete than the previous 92% frame. The extra height
           // is taken mostly below the zone floor (inside the cutout's bottom
@@ -58,19 +60,23 @@ export const heroConfiguration: HeroConfiguration = {
           subjectWidth: "106%",
           subjectCenterX: "54%",
           subjectBottom: "-5%",
-          // Largest size at which "BUILD YOUR" (~5.73em incl. word gap) fits
-          // on one line inside the frame at every phone width (320-767px).
-          typeSize: "15.6vw",
-          // Raised from 22% so more of "YOUR" clears the athlete's head.
-          backTop: "14%",
-          backLeft: "4%",
-          backWordLayout: "inline",
-          // Anchored to the BUILD YOUR line in em (0.82em line box + 0.4em
-          // gap, matching desktop's ~0.43em) instead of a zone %: the zone's
-          // height/width ratio varies ~2x across phones, so a % offset either
-          // collides with YOUR on short phones or drifts away on tall ones.
-          frontTop: "calc(14% + 1.22em)",
+          typeSize: "13vw",
+          // One even rhythm for all three lines: the block is lowered by
+          // 5.18vw so POWER. keeps its position (clear of the chin) and the
+          // visible gaps BUILD -> YOUR and YOUR -> POWER. match. backLeft 6%
+          // keeps the D and R tails only just tucked behind the head.
+          backTop: "calc(2% + 5.18vw)",
+          backLeft: "6%",
+          backWordLayout: "stack",
+          // YOUR steps right of BUILD so the R tail tucks behind the
+          // athlete's neck/shoulder line â€” a staggered cascade, not a list.
+          backStackIndent: "0.35em",
+          // Measured ink gap BUILD -> YOUR is ~0.9vw (the shared 0.82 line
+          // box); 26.6vw puts POWER. (larger, so its glyphs sit differently
+          // in their line box) at the same visible gap below YOUR.
+          frontTop: "calc(2% + 26.6vw)",
           frontLeft: "30%",
+          frontSize: "15.6vw",
         },
         tablet: {
           subjectHeight: "90%",
@@ -125,7 +131,7 @@ export const heroConfiguration: HeroConfiguration = {
         "Muscular male athlete in profile performing a standing dumbbell curl.",
       eyebrow: "The Coaching",
       headline: "Move with intent.",
-      // ONE semantic headline — "MOVE WITH INTENT." — distributed across three
+      // ONE semantic headline â€” "MOVE WITH INTENT." â€” distributed across three
       // depth planes: MOVE (deep background, partially occluded by the
       // athlete's head/shoulder) -> WITH (bridge layer threading across the
       // shoulder/upper-back seam) -> INTENT. (foreground climax, accent
@@ -137,7 +143,7 @@ export const heroConfiguration: HeroConfiguration = {
         front: ["INTENT."],
       },
       // Three-depth editorial cascade composition authored per breakpoint.
-      // Slide 02 refinement — Slide 01 ("BUILD YOUR POWER.") is frozen and
+      // Slide 02 refinement â€” Slide 01 ("BUILD YOUR POWER.") is frozen and
       // untouched; only this slide's data changes below. Geometry derived
       // from banner-image-02.png (three-quarter rear/side pose): head at
       // x=55-72% in the top ~22%, shoulder/traps widen x=35-88% at 15-35%,
@@ -147,11 +153,11 @@ export const heroConfiguration: HeroConfiguration = {
       // Spatial choreography (kinetic, deliberately NOT Slide 01's
       // back/front-only, evenly-spaced rhythm):
       // - MOVE: largest, upper-left, neutral off-white. Only its trailing
-      //   edge ("VE") tucks behind the head/shoulder — legible as "MOV[E]",
+      //   edge ("VE") tucks behind the head/shoulder â€” legible as "MOV[E]",
       //   never fully hidden, so the word stays instantly readable.
       // - WITH: the bridge. Smaller scale, receded tone, sitting low against
       //   the neck/shoulder/upper-back seam so the athlete's silhouette
-      //   visibly interrupts it — threaded through the figure, not floating
+      //   visibly interrupts it â€” threaded through the figure, not floating
       //   beneath MOVE.
       // - INTENT.: the climax, accent lime, anchored to start over the
       //   lower torso/working forearm and travel rightward into open space
@@ -176,7 +182,7 @@ export const heroConfiguration: HeroConfiguration = {
           // other two words keep their tight vw steps below it. The
           // horizontal stagger between the words is unchanged.
           backTop: "calc(50% - 21.53vw)",
-          backLeft: "10%",
+          backLeft: "3%",
           backWordLayout: "inline",
           // Bridge at z15, behind the athlete, so its tail is genuinely cut
           // by the back contour instead of floating beside the figure.
@@ -186,7 +192,7 @@ export const heroConfiguration: HeroConfiguration = {
           // instead of drifting apart on tall frames. Each step = previous
           // word's line box (0.82 x its size) + 3vw.
           middleTop: "calc(50% - 4.89vw)",
-          middleLeft: "42%",
+          middleLeft: "5%",
           middleSize: "10.54vw",
           // INTENT. lands over the torso.
           frontTop: "calc(50% + 6.75vw)",
@@ -201,10 +207,10 @@ export const heroConfiguration: HeroConfiguration = {
           typeSize: "15.25vw",
           // Same centred block as `mobile` (40.11vw tall), from this frame's sizes.
           backTop: "calc(50% - 20.06vw)",
-          backLeft: "13%",
+          backLeft: "4%",
           backWordLayout: "inline",
           middleTop: "calc(50% - 4.55vw)",
-          middleLeft: "49%",
+          middleLeft: "6%",
           middleSize: "9.71vw",
           frontTop: "calc(50% + 6.41vw)",
           frontLeft: "14%",
@@ -258,7 +264,7 @@ export const heroConfiguration: HeroConfiguration = {
           // dominating the whole upper band; nudged down from the header
           // (backTop 18 vs 14) and started a touch further right (backLeft 6)
           // so its trailing "VE" runs into the head/upper-back and only the
-          // tail is occluded — anchored to the athlete, not a poster word.
+          // tail is occluded â€” anchored to the athlete, not a poster word.
           typeSize: "13.5vw",
           backTop: "18%",
           backLeft: "6%",
@@ -273,7 +279,7 @@ export const heroConfiguration: HeroConfiguration = {
           middleLeft: "20%",
           middleSize: "7.8vw",
           // INTENT.: raised and shifted right (frontTop 66->60, frontLeft
-          // 27->34) — the smallest adjustment that fully clears the CTA row
+          // 27->34) â€” the smallest adjustment that fully clears the CTA row
           // while keeping the torso overlap and the rightward reach toward
           // (not over) the dumbbell.
           frontTop: "60%",
@@ -309,7 +315,7 @@ export const heroConfiguration: HeroConfiguration = {
       spokenHeadline: "Stronger again together.",
       // Slide 03 is deliberately NOT Slide 01's or Slide 02's choreography.
       // It is a FULL-FIGURE CAMPAIGN FRAME: the athlete pair is one large
-      // photographic subject, and the typography frames it from the front —
+      // photographic subject, and the typography frames it from the front â€”
       // STRONGER above-left (off-white, `frontSecondary`) and TOGETHER.
       // across the lower bodies (accent climax, `front`). AGAIN is the only
       // element behind the pair, as a subordinate depth accent.
@@ -332,11 +338,11 @@ export const heroConfiguration: HeroConfiguration = {
       // MICRO-POLISH (final pass, data only). Two measured corrections, no
       // re-composition: (a) STRONGER's right edge reached 38-43% into the
       // pair's measured silhouette width on laptop/desktop, so it pressed
-      // into the group instead of framing it — its size drops ~8% to land at
+      // into the group instead of framing it â€” its size drops ~8% to land at
       // ~30% penetration, which is inside the near athlete's contour but
       // clear of the group's centre. (b) AGAIN was the second-LARGEST word on
       // every frame (larger than STRONGER), and on desktop its baseline sat
-      // 2px off STRONGER's cap line — its size drops below STRONGER's on all
+      // 2px off STRONGER's cap line â€” its size drops below STRONGER's on all
       // frames so the hierarchy reads TOGETHER. > STRONGER > AGAIN, which
       // also opens a real typographic gap between the two upper words. AGAIN
       // keeps its single-head crossing: `backLeft` is re-anchored per frame so
@@ -355,11 +361,16 @@ export const heroConfiguration: HeroConfiguration = {
           // scale alone has to carry the hierarchy: 13vw made it read as
           // STRONGER's equal, 10.4vw puts it clearly behind it.
           typeSize: "10.4vw",
-          backTop: "6%",
+          // Raised from 6% to 1%: at 6% the woman's head covered the "G" and
+          // the word read "A_AIN". At 1% AGAIN sits above her head and only
+          // the tail of the "N" tucks behind the man's hair, so it stays
+          // readable while still passing behind the pair. The zone already
+          // starts below the header, so 1% cannot collide with it.
+          backTop: "1%",
           backLeft: "26%",
           backWordLayout: "inline",
           // STRONGER sits BELOW the head band (heads occupy y 9-19% of the
-          // asset) so it crosses shoulders/arms and never covers a face —
+          // asset) so it crosses shoulders/arms and never covers a face â€”
           // there is no room above the heads once the header is cleared.
           // Phone frames are narrower than the figure itself, so any legible
           // size overlaps the pair; STRONGER's scale is deliberately NOT
@@ -467,7 +478,7 @@ export const heroConfiguration: HeroConfiguration = {
         "Full racks, real plates, and enough floor space to train without waiting.",
       // Slide 03 opens the third interactive tool (lib/fitness-tools.ts,
       // "first-30-days"). If that registry entry is ever disabled, the slide
-      // shows the fallback below instead — never a dead link.
+      // shows the fallback below instead â€” never a dead link.
       cta: {
         primary: {
           type: "tool",

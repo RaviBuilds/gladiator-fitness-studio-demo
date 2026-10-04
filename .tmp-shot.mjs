@@ -12,7 +12,7 @@ const browser = await chromium.launch({
 });
 for (const [w, h] of sizes) {
   const page = await browser.newPage({ viewport: { width: w, height: h }, reducedMotion: "reduce" });
-  await page.goto("http://localhost:3100/", { waitUntil: "networkidle" });
+  await page.goto("http://localhost:3000/", { waitUntil: "networkidle" });
   for (const slide of slides) {
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.locator('[role="tab"]').nth(slide - 1).click();
@@ -35,3 +35,4 @@ for (const [w, h] of sizes) {
   await page.close();
 }
 await browser.close();
+

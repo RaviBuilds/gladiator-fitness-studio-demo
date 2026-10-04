@@ -62,6 +62,8 @@ function compositionVars(composition: HeroSlideComposition): CSSProperties {
     vars[`--hero-${key}-back-left`] = frame.backLeft;
     vars[`--hero-${key}-back-word-display`] =
       frame.backWordLayout === "stack" ? "block" : "inline-block";
+    if (frame.backStackIndent)
+      vars[`--hero-${key}-back-indent`] = frame.backStackIndent;
     if (frame.middleTop) vars[`--hero-${key}-middle-top`] = frame.middleTop;
     if (frame.middleLeft) vars[`--hero-${key}-middle-left`] = frame.middleLeft;
     if (frame.middleSize) vars[`--hero-${key}-middle-size`] = frame.middleSize;
