@@ -4,6 +4,7 @@ import { business } from "@/lib/business";
 import { instagramConfig } from "@/lib/instagram";
 import { socialLinks } from "@/lib/social";
 import { SocialIcon } from "@/components/ui/SocialIcons";
+import { GoogleTrustCard } from "@/components/sections/GoogleTrustCard";
 import { sections } from "@/lib/sections";
 import { Container } from "@/components/ui/Container";
 
@@ -148,6 +149,8 @@ export function Footer() {
                 </li>
               ))}
             </ul>
+
+            <GoogleTrustCard />
           </div>
         </div>
 

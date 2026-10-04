@@ -67,8 +67,12 @@ test("closed days and partial address data degrade cleanly", () => {
   assert.match(LOCATION_SRC, /\.filter\(\(line\) => line && line\.trim\(\)\)/);
 });
 
-test("the directions CTA is a plain outbound link, not a map integration", () => {
-  assert.equal(LOCATION_SRC.includes("<iframe"), false, "no embedded map");
+test("the directions CTA is an outbound link; the map is a keyless lazy embed", () => {
+  // A small keyless embed is allowed, but it must be accessible, lazy and
+  // built from the business data - never a maps SDK / API key.
+  assert.match(LOCATION_SRC, /<iframe[\s\S]*?title=\{/);
+  assert.match(LOCATION_SRC, /loading="lazy"/);
+  assert.match(LOCATION_SRC, /encodeURIComponent\(mapQuery\)/);
   assert.equal(/google.*api|apiKey|API_KEY/i.test(LOCATION_SRC), false, "no maps API");
   assert.match(LOCATION_SRC, /target="_blank"/);
   assert.match(LOCATION_SRC, /rel="noopener noreferrer"/);

@@ -32,6 +32,12 @@ export const googleReviews: GoogleReviews = {
     "Members repeatedly highlight trainer Najma Parveen's supportive, friendly coaching, flexible timings, a clean and well-monitored facility, and ladies-specific arrangements.",
   googleBusinessProfileUrl:
     "https://www.google.com/maps/search/?api=1&query=Gladiator+Fitness+Studio+Madhapur+Hyderabad",
+  // Fill these two once the owner supplies the Google "write a review" link
+  // (Google Business Profile -> Get more reviews -> share link). The footer
+  // trust card then adds a "Write a review" link and, if reviewQrSrc points at
+  // a QR image of that link, the scan-to-review QR. Left unset = not rendered.
+  reviewUrl: undefined,
+  reviewQrSrc: undefined,
   reviews: [
     {
       name: "Srilatha Kapa",

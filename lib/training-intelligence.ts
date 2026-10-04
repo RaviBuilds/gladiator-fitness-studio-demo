@@ -358,6 +358,8 @@ export const trainingIntelligenceConfiguration: TrainingIntelligenceConfiguratio
   toolsHeading: "Not sure where to start?",
   toolsDeck:
     "Three short guided tools. Answer a few questions and get a starting point, a roadmap or a first-month plan shaped around your goal and your week.",
+  toolsStartLabel: "Start here",
+  toolsOutcomeLabel: "You get",
   disclaimer:
     "General training principles for education, not medical, physiotherapy or nutrition advice. Tell a coach about any injury or medical condition before you start.",
   // Optional attribution. Leave undefined unless the gym can genuinely stand

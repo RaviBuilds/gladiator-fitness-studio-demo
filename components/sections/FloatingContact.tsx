@@ -49,7 +49,7 @@ export function FloatingContact({
   const shown = state === "in";
 
   return (
-    <div className="pointer-events-none fixed bottom-5 right-5 z-40 flex flex-col items-center gap-4">
+    <div className="pointer-events-none fixed bottom-5 right-5 z-40 flex flex-col items-center gap-3">
       {phoneHref && (
         <div className="factory-fab factory-fab--call" data-state={state} style={{ "--fab-delay": "90ms" } as React.CSSProperties}>
           <div className="factory-fab__float">

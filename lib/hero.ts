@@ -275,7 +275,6 @@ export const heroConfiguration: HeroConfiguration = {
           subheadline:
             "Structure, not guesswork. Map a training path around your goal, your week and your starting point.",
         },
-        secondary: { type: "link", label: "See Membership", href: "#membership" },
       },
     },
     {

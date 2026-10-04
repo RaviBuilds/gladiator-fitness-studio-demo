@@ -197,7 +197,8 @@ test("hero: Slide 01 Start, Slide 02 Journey, Slide 03 First 30 Days", () => {
 
   assert.equal(s2.primaryCtaHref, "/journey");
   assert.equal(s2.primaryCtaLabel, "Map Your Fitness Journey");
-  assert.equal(s2.secondaryCtaHref, "#membership");
+  assert.equal(s2.secondaryCtaHref, undefined);
+  assert.equal(s2.secondaryCtaLabel, undefined);
   assert.match(s2.subheadline, /goal, your week and your starting point/);
 
   assert.equal(s3.primaryCtaHref, "/first-30-days");
@@ -235,8 +236,8 @@ test("hero: Hero.tsx resolves on the server; HeroSlider only gained the arrow", 
   assert.match(HERO_SRC, /resolveHeroSlides\(heroConfiguration\.slides, fitnessTools/);
   assert.match(HERO_SRC, /slides=\{slides\}/);
   assert.equal(/s05-|TrainingIntelligence|TrainingLoadout/.test(HERO_SRC), false);
-  assert.match(SLIDER_SRC, /slide\.primaryCtaArrow && <span aria-hidden="true">→<\/span>/);
-  assert.match(SLIDER_SRC, /slide\.secondaryCtaArrow && <span aria-hidden="true">→<\/span>/);
+  assert.match(SLIDER_SRC, /slide\.primaryCtaArrow && <span aria-hidden="true">â†’<\/span>/);
+  assert.match(SLIDER_SRC, /slide\.secondaryCtaArrow && <span aria-hidden="true">â†’<\/span>/);
   assert.equal(SLIDER_SRC.includes("fitness-tools"), false, "the slider never reads the registry");
 });
 
@@ -305,8 +306,31 @@ test("new modules carry no hex colour literals", () => {
     "../components/sections/fitnessToolsLogic.ts",
     "../components/sections/TrainingIntelligence.tsx",
     "../components/sections/TrainingTools.tsx",
+    "../components/ui/TrainingToolVisuals.tsx",
     "../components/sections/Hero.tsx",
   ]) {
     assert.equal(/#[0-9a-fA-F]{6}\b|#[0-9a-fA-F]{3}\b(?![\w-])/.test(stripComments(read(rel))), false, rel);
   }
+});
+
+test("tools strip: outcome + start label come from data; every tool has a drawing", () => {
+  const VIS_SRC = read("../components/ui/TrainingToolVisuals.tsx");
+  // Framing labels are configuration, not JSX literals.
+  for (const key of ["toolsStartLabel", "toolsOutcomeLabel"]) {
+    assert.ok(tiConfig[key].trim().length > 0, `${key} is set`);
+    assert.ok(TOOLS_SRC.includes(`{${key}}`), `{${key}} rendered from config`);
+    assert.equal(TOOLS_CODE.includes(tiConfig[key]), false, `${key} text not hardcoded`);
+  }
+  // The outcome is registry data and only renders when present.
+  assert.ok(TOOLS_SRC.includes("{tool.outcome}"));
+  assert.match(TOOLS_SRC, /\{tool\.outcome && \(/);
+  for (const tool of availableTools(fitnessTools)) {
+    assert.ok(tool.outcome && tool.outcome.trim().length > 0, `${tool.id} has an outcome`);
+    // One drawing per registry id, so no tool renders an empty visual box.
+    assert.ok(VIS_SRC.includes(`case "${tool.id}":`), `${tool.id} has an illustration`);
+  }
+  // Drawings are decorative.
+  assert.equal((VIS_SRC.match(/aria-hidden="true"/g) ?? []).length >= 4, true);
+  // The card's whole area is one link target, stretched from the CTA.
+  assert.match(CSS_SRC, /\.s05-toolstrip \.s05-tool-cta::after \{[^}]*inset: 0;/);
 });

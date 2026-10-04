@@ -35,6 +35,7 @@ export const fitnessTools: FitnessTool[] = [
     description:
       "Five quick questions on your goal, experience and schedule, and a practical place to begin.",
     meta: "5 questions",
+    outcome: "A practical place to begin",
     ctaLabel: "Find your starting point",
     href: "/start",
     enabled: true,
@@ -46,6 +47,7 @@ export const fitnessTools: FitnessTool[] = [
     description:
       "Three questions, then a phased roadmap with checkpoints across a 3, 6 or 12-month view.",
     meta: "3 questions · 3/6/12-month view",
+    outcome: "A phased roadmap with checkpoints",
     ctaLabel: "Map your fitness journey",
     href: "/journey",
     enabled: true,
@@ -57,6 +59,7 @@ export const fitnessTools: FitnessTool[] = [
     description:
       "Five quick questions, then a realistic first month: your weekly rhythm, a first visit and what to ask.",
     meta: "5 questions · ~1 min",
+    outcome: "Your weekly rhythm, first visit and questions to ask",
     ctaLabel: "Plan your first 30 days",
     href: "/first-30-days",
     enabled: true,

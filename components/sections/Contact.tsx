@@ -22,7 +22,7 @@ import { ContactForm } from "@/components/motion/ContactForm";
  * address or WhatsApp link is written into this file.
  */
 export function Contact({ whatsappHref }: { whatsappHref: string }) {
-  const directory = contactDirectory(business);
+  const directory = contactDirectory(business).filter((entry) => entry.id !== "address");
 
   return (
     <section

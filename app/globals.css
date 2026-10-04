@@ -331,7 +331,7 @@ html {
  * Reduced-motion is handled by the global block above (durations -> ~0).
  */
 .factory-fab {
-  --fab-size: 3.5rem;
+  --fab-size: 2.75rem;
   --fab-color: var(--success);
   --fab-fg: #ffffff;
   position: relative;
@@ -406,7 +406,7 @@ html {
     transform: translate3d(0, 0, 0) rotate(-2deg);
   }
   50% {
-    transform: translate3d(0, -8px, 0) rotate(2deg);
+    transform: translate3d(0, -5px, 0) rotate(2deg);
   }
 }
 
@@ -463,9 +463,21 @@ html {
 }
 
 .factory-fab__icon {
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 1.375rem;
+  height: 1.375rem;
   transform-origin: 50% 60%;
+}
+
+/* From 640px the buttons step up slightly (48px) for pointer precision. */
+@media (min-width: 640px) {
+  .factory-fab {
+    --fab-size: 3rem;
+  }
+
+  .factory-fab__icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 }
 
 .factory-fab--whatsapp .factory-fab__icon {
@@ -512,7 +524,7 @@ html {
   position: absolute;
   left: 12%;
   right: 12%;
-  bottom: -14px;
+  bottom: -10px;
   height: 10px;
   border-radius: 9999px;
   background: rgb(0 0 0 / 0.55);
@@ -6040,9 +6052,11 @@ html {
 /*
  * Standalone strip (components/sections/TrainingTools.tsx, between Sections 01
  * and 02). The block above was Section 05's closing row; as its own section it
- * drops the top rule / offset and reads as an ordered sequence: the tools are
- * numbered 01-03 and, from 1024px, joined by small accent chevrons sitting in
- * the column gaps.
+ * drops the top rule / offset and becomes a route: the tools are numbered
+ * 01-03, joined by small accent chevrons from 1024px, each card leads with an
+ * illustration of what that tool produces, and a route drawing fills the
+ * header's right-hand side. Tokens only — colours come from Section 05's paper
+ * variables, so an accent change flows through.
  */
 .s05-toolstrip .s05-tools {
   margin-top: 0;
@@ -6055,7 +6069,29 @@ html {
   column-gap: var(--s05-tool-gap);
 }
 
+/* Header: copy left, route drawing right (desktop only). */
+.s05-tools-top {
+  display: block;
+}
+
+.s05-viz-banner {
+  display: none;
+}
+
 @media (min-width: 1024px) {
+  .s05-tools-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 26rem);
+    align-items: center;
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+
+  .s05-viz-banner {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
   .s05-toolstrip .s05-tool:not(:last-child)::after {
     content: "";
     position: absolute;
@@ -6066,6 +6102,316 @@ html {
     border-top: 2px solid var(--s05-accent-ink);
     border-right: 2px solid var(--s05-accent-ink);
     transform: rotate(45deg);
+  }
+}
+
+.s05-viz-banner-route {
+  fill: none;
+  stroke: var(--s05-accent-ink);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 2 7;
+  animation: s05-viz-flow 2.4s linear infinite;
+}
+
+.s05-viz-banner-node {
+  fill: var(--s05-paper-lift);
+  stroke: var(--s05-ink);
+  stroke-width: 1.5;
+}
+
+.s05-viz-banner-text {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 10px;
+  font-weight: 600;
+  fill: var(--s05-ink);
+}
+
+@keyframes s05-viz-flow {
+  to {
+    stroke-dashoffset: -18;
+  }
+}
+
+/* Card: illustration first, then the facts. */
+.s05-tool-visual {
+  position: relative;
+  margin-bottom: 1.125rem;
+  border: 1px solid var(--s05-line);
+  background: var(--s05-paper-lift);
+  padding: 0.5rem 0.75rem;
+}
+
+.s05-tool-flag {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  background: var(--s05-ink);
+  color: var(--s05-paper-lift);
+  padding: 0.25rem 0.5rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.5625rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.s05-toolstrip .s05-tool-text {
+  margin-bottom: 0;
+}
+
+/* "You get: ..." — the concrete result, in a few words. */
+.s05-tool-outcome {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin: 0.875rem 0 1.25rem;
+  border-left: 2px solid var(--s05-accent-ink);
+  padding-left: 0.75rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--s05-ink);
+}
+
+/* Mobile only: balance the wrap so a two-line result never strands one word. */
+@media (max-width: 639px) {
+  .s05-tool-outcome {
+    text-wrap: balance;
+  }
+}
+
+.s05-tool-outcome-label {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--s05-secondary-ink);
+}
+
+/* The whole card is one click target: the CTA's link is stretched over it. */
+.s05-toolstrip .s05-tool-cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.s05-toolstrip .s05-tool:is(:hover, :focus-within) .s05-tool-cta {
+  border-color: var(--s05-accent-ink);
+  color: var(--s05-accent-ink);
+}
+
+.s05-toolstrip .s05-tool:is(:hover, :focus-within) .s05-tool-arrow {
+  transform: translateX(3px);
+}
+
+.s05-toolstrip .s05-tool:is(:hover, :focus-within) .s05-tool-name {
+  color: var(--s05-accent-ink);
+}
+
+.s05-tool-name {
+  transition: color 180ms ease;
+}
+
+/* ---- illustrations (components/ui/TrainingToolVisuals.tsx) ---- */
+
+.s05-viz {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.s05-viz-dot {
+  fill: var(--s05-line);
+}
+
+.s05-viz-ring {
+  fill: none;
+  stroke: var(--s05-line);
+  stroke-width: 1;
+}
+
+.s05-viz-cross,
+.s05-viz-axis {
+  fill: none;
+  stroke: var(--s05-line);
+  stroke-width: 1;
+}
+
+.s05-viz-cross {
+  stroke-dasharray: 2 3;
+}
+
+.s05-viz-axis {
+  stroke: var(--s05-ink-soft);
+}
+
+.s05-viz-arrow {
+  fill: none;
+  stroke: var(--s05-ink-soft);
+  stroke-width: 1;
+}
+
+.s05-viz-tick {
+  stroke: var(--s05-secondary-ink);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.s05-viz-pin {
+  fill: var(--s05-accent-ink);
+}
+
+.s05-viz-pin-hole {
+  fill: var(--s05-paper-lift);
+}
+
+.s05-viz-ping {
+  fill: none;
+  stroke: var(--s05-accent-ink);
+  stroke-width: 1.5;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: s05-viz-ping 3.2s ease-out infinite;
+}
+
+.s05-viz-drop {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.s05-viz-label {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 7px;
+  letter-spacing: 0.14em;
+  fill: var(--s05-ink-soft);
+}
+
+.s05-viz-route {
+  fill: none;
+  stroke: var(--s05-accent-ink);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 400;
+  stroke-dashoffset: 0;
+}
+
+.s05-viz-node {
+  fill: var(--s05-paper-lift);
+  stroke: var(--s05-accent-ink);
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.s05-viz-node-start {
+  stroke: var(--s05-ink-soft);
+  stroke-width: 1.5;
+}
+
+.s05-viz-node-end {
+  fill: var(--s05-accent-ink);
+}
+
+.s05-viz-day {
+  fill: none;
+  stroke: var(--s05-line);
+  stroke-width: 1;
+}
+
+.s05-viz-day-on {
+  fill: var(--s05-ink);
+  stroke: var(--s05-ink);
+}
+
+.s05-viz-day-text {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 9px;
+  font-weight: 600;
+  fill: var(--s05-ink-soft);
+}
+
+.s05-viz-day-text-on {
+  fill: var(--s05-paper-lift);
+}
+
+.s05-viz-cell {
+  fill: none;
+  stroke: var(--s05-line);
+  stroke-width: 1;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.s05-viz-cell-on {
+  fill: var(--s05-accent-face);
+  stroke: var(--s05-accent-ink);
+}
+
+.s05-viz-cell-first {
+  fill: var(--s05-accent-ink);
+}
+
+/* Hover / keyboard focus on the card plays the drawing. */
+.s05-tool:is(:hover, :focus-within) .s05-viz-drop {
+  animation: s05-viz-drop 650ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.s05-tool:is(:hover, :focus-within) .s05-viz-route {
+  animation: s05-viz-draw 1100ms ease-out both;
+}
+
+.s05-tool:is(:hover, :focus-within) .s05-viz-node-pop {
+  animation: s05-viz-pop 420ms cubic-bezier(0.34, 1.56, 0.64, 1) var(--d, 0ms) both;
+}
+
+.s05-tool:is(:hover, :focus-within) .s05-viz-cell {
+  animation: s05-viz-pop 360ms ease-out calc(var(--i, 0) * 22ms) both;
+}
+
+@keyframes s05-viz-ping {
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  80%,
+  100% {
+    opacity: 0;
+    transform: scale(3.2);
+  }
+}
+
+@keyframes s05-viz-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes s05-viz-draw {
+  from {
+    stroke-dashoffset: 400;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes s05-viz-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
@@ -6142,6 +6488,20 @@ html {
 
   .s05-swap {
     animation: none;
+  }
+
+  /* Tools strip illustrations: show the finished drawings, static. */
+  .s05-viz-ping,
+  .s05-viz-banner-route,
+  .s05-tool:is(:hover, :focus-within) .s05-viz-drop,
+  .s05-tool:is(:hover, :focus-within) .s05-viz-route,
+  .s05-tool:is(:hover, :focus-within) .s05-viz-node-pop,
+  .s05-tool:is(:hover, :focus-within) .s05-viz-cell {
+    animation: none;
+  }
+
+  .s05-viz-ping {
+    display: none;
   }
 
   .s05-emphasis-row.factory-stagger-child {
@@ -7397,6 +7757,52 @@ html {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   white-space: nowrap;
+}
+
+/*
+ * MOBILE ONLY (<640px). The standard card's horizontal row (index | body | CTA)
+ * has no room for an amount (or the "Consult management" status) next to a
+ * nowrap CTA, so the CTA ran over the price. Below 640px the standard card
+ * takes the same stacked composition the promoted cards already use:
+ *
+ *   [01]  6 MONTHS
+ *         ₹10,000
+ *         BILLED ONCE
+ *   ─────────────────────────
+ *   ENQUIRE                →
+ *
+ * One column, so every card has the full content width. Desktop and tablet
+ * (>=640px) are untouched: nothing here applies above that width.
+ */
+@media (max-width: 639px) {
+  .s06-register {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .s06-card:not([data-promoted="true"]) {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    column-gap: 0.875rem;
+    row-gap: 0.875rem;
+  }
+
+  .s06-card:not([data-promoted="true"]) .s06-card-index {
+    padding-top: 0.125rem;
+  }
+
+  /* Full-width CTA row under a rule, with a comfortable 44px tap height. */
+  .s06-card:not([data-promoted="true"]) .s06-card-cta {
+    grid-column: 1 / -1;
+    align-self: stretch;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 2.75rem;
+    margin-top: 0;
+    padding: 0;
+    border-left: 0;
+    border-top: 1px solid var(--border);
+  }
 }
 
 /* ---------------------------------------------------------- special training */
@@ -10053,6 +10459,17 @@ html {
     width: 100%;
     justify-content: center;
   }
+
+  /* Narrower, centred Reel frames. Instagram derives the iframe height from
+     its width, so a narrower track shortens each frame proportionally instead
+     of filling the full column (~350px at 390px wide) and running very tall. */
+  .factory-instagram-embed-wrapper {
+    max-width: 280px;
+  }
+
+  .factory-instagram-embed-wrapper .instagram-media {
+    max-width: 100% !important;
+  }
 }
 
 /* Reduced motion support */
@@ -10137,9 +10554,38 @@ html {
 
 /* Address block. */
 .factory-location-block {
-  margin-top: 2.25rem;
+  margin-top: 1.75rem;
   border-top: 1px solid var(--border);
   padding-top: 1.25rem;
+}
+
+/* Small embedded map: a bordered, fixed-height plate with a short accent tick
+   on its top edge (same technical-card language as the rest of the site). */
+.factory-location-map {
+  position: relative;
+  height: clamp(14rem, 30vw, 18rem);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.factory-location-map::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  z-index: 1;
+  width: 2.5rem;
+  height: 2px;
+  background: var(--accent);
+  pointer-events: none;
+}
+
+.factory-location-map-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
 .factory-location-block-label {

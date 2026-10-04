@@ -11,8 +11,9 @@ import { Reveal } from "@/components/motion/Reveal";
  * identity register on the left against an hours register on the right, over
  * the factory's technical line-art background language (oversized pin outline,
  * crosshair, coordinate ticks, calibration strip, vertical edge label). No
- * third-party map SDK and no embedded iframe — the directions CTA links out to
- * the verified map URL held in lib/business.ts.
+ * third-party map SDK: a small keyless Google Maps embed (lazy-loaded iframe)
+ * sits above the address, and the directions CTA links out to the verified map
+ * URL held in lib/business.ts.
  *
  * SOURCE-FIRST: every address part, the map URL and all hours resolve from
  * lib/business.ts. No street, locality, city, state, postcode, landmark or
@@ -28,6 +29,14 @@ export function Location() {
     [address.locality, address.city].filter((p) => p && p.trim()).join(", "),
     [address.state, address.postalCode].filter((p) => p && p.trim()).join(" "),
   ].filter((line) => line && line.trim());
+
+  // Embed URL built from the verified business name + address (same approach as
+  // the mapUrl in lib/business.ts) - no API key and no invented coordinates or
+  // Place ID. Rendered only when there is an address to search for.
+  const mapQuery = [business.name, ...addressLines].filter(Boolean).join(", ");
+  const mapEmbedSrc = addressLines.length > 0
+    ? `https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&output=embed`
+    : null;
 
   return (
     <section
@@ -79,18 +88,32 @@ export function Location() {
       </div>
 
       <Container className="relative z-10">
-        {/* Two-column editorial composition from tablet up; below that the
-            registers stack as LOCATION -> DIRECTIONS -> HOURS. */}
-        <div className="grid grid-cols-1 gap-x-10 gap-y-14 md:grid-cols-12 lg:gap-x-16">
-          {/* Location identity register */}
-          <Reveal className="md:col-span-7">
-            <div className="factory-location-heading">
-              <SectionHeading eyebrow="Location & Hours" index="11" title="Find us." />
-            </div>
+        {/* Heading + intro, full width. */}
+        <Reveal>
+          <div className="factory-location-heading">
+            <SectionHeading eyebrow="Location & Hours" index="11" title="Find us." />
+          </div>
 
-            <p className="mt-5 max-w-md text-base leading-7 text-(--text-secondary)">
-              Walk in during opening hours, or send the directions to your phone first.
-            </p>
+          <p className="mt-5 max-w-md text-base leading-7 text-(--text-secondary)">
+            Walk in during opening hours, or send the directions to your phone first.
+          </p>
+        </Reveal>
+
+        {/* Below the heading: map + address on the left, hours on the right.
+            Below tablet the registers stack as MAP -> ADDRESS -> HOURS. */}
+        <div className="mt-12 grid grid-cols-1 gap-x-10 gap-y-12 md:grid-cols-12 lg:mt-14 lg:gap-x-16">
+          <Reveal className="md:col-span-7">
+            {mapEmbedSrc && (
+              <div className="factory-location-map">
+                <iframe
+                  src={mapEmbedSrc}
+                  title={`Map showing the location of ${business.name}`}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="factory-location-map-frame"
+                />
+              </div>
+            )}
 
             <div className="factory-location-block">
               <p className="factory-location-block-label">Address</p>
@@ -108,7 +131,7 @@ export function Location() {
               <Button
                 href={mapUrl}
                 variant="secondary"
-                className="mt-8"
+                className="mt-6"
                 target="_blank"
                 rel="noopener noreferrer"
               >

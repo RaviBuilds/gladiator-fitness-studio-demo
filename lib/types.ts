@@ -84,6 +84,17 @@ export interface GoogleReviews {
   /** Derived from real review sentiment, never invented */
   tagline: string;
   googleBusinessProfileUrl: string;
+  /**
+   * Direct "write a review" link for the Google Business Profile (the share
+   * link Google provides under "Ask for reviews"). Optional and NEVER guessed:
+   * when unset, the footer trust card shows no review CTA.
+   */
+  reviewUrl?: string;
+  /**
+   * Public path of a review QR-code image (e.g. "/assets/reviews/gbp-review-qr.png")
+   * that encodes `reviewUrl`. Optional: when unset, no QR renders.
+   */
+  reviewQrSrc?: string;
   /** Exactly 3 in the standard product */
   reviews: Review[];
 }
@@ -558,6 +569,11 @@ export interface FitnessTool {
   description: string;
   /** Short mono tag describing the format, e.g. "5 questions". */
   meta: string;
+  /**
+   * What the visitor walks away with, in a few words. Only what the tool
+   * actually produces — never an outcome promise. Rendered as "You get: …".
+   */
+  outcome?: string;
   /** Descriptive CTA label used in the Training Intelligence tools block. */
   ctaLabel: string;
   /** CTA label used on a hero slide. Defaults to `name`. */
@@ -988,12 +1004,16 @@ export interface TrainingIntelligenceConfiguration {
    * href comes from the existing site-wide WhatsApp action.
    */
   ctaMessageTemplate: string;
-  /** Mono label above the tools block, e.g. "Training tools". */
+  /** Mono label above the tools strip, e.g. "Training tools". */
   toolsEyebrow: string;
-  /** Tools block heading (rendered as h3). */
+  /** Tools strip heading (rendered as h2). */
   toolsHeading: string;
-  /** One-sentence tools block intro. */
+  /** One-sentence tools strip intro. */
   toolsDeck: string;
+  /** Small tag on the first tool card, e.g. "Start here". */
+  toolsStartLabel: string;
+  /** Label before each tool's outcome line, e.g. "You get". */
+  toolsOutcomeLabel: string;
   /** Standing safety line. Educational scope, explicitly not medical advice. */
   disclaimer: string;
   /** Optional reviewer attribution. Render only if the gym can stand behind it. */
